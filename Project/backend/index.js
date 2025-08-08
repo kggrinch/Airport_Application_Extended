@@ -1,27 +1,25 @@
 const express = require('express');
 const cors = require('cors');
-const adminRoutes = require('./routes/admin');
+// const adminRoutes = require('./routes/admin');
 const customerRoutes = require('./routes/customer');
-
-const sequelize = require('./config'); // change
+const connection = require(`./config`);
 
 const app = express();
 
-app.use(cors());
-app.use(express.json());
+// Connect middleware
+app.use(cors()); // set cross browser communication
+app.use(express.json()); // set communication via json
+app.use((err, req, res, next) => // set error handling
+{
+  console.log(err.stack);
+  res.status(500).send(`Error!`);
+});
 
 // Routes
-app.use('/admin', adminRoutes);
+// app.use('/admin', adminRoutes);
 app.use('/customer', customerRoutes);
 
-// Start server after DB connects
-// Change
-sequelize.sync().then(() =>
+app.listen(3000, () =>
 {
-  console.log('Database synced');
-  app.listen(3000, () => console.log('Server running at http://localhost:3000'));
+  console.log(`Server running at http://localhost:3000`)
 })
-.catch(err => 
-  {
-  console.error('DB connection failed:', err);
-});
