@@ -1,4 +1,5 @@
-const Flight = require('../models/flights');
+const connection = require('../config');
+
 
 /**
  * @api {get} /customer Get All Unscheduled Flights
@@ -29,21 +30,18 @@ const Flight = require('../models/flights');
  *        "Error": "Error fetching flights"
  *      }
  */
-exports.getAllFlights = async (req, res) => 
-{
-  try 
-  {
-    const flights = await Flight.findAll({where: {scheduled: false}});
+exports.getAllFlights = (req, res) => {
+  connection.query('SELECT * FROM flights WHERE scheduled = FALSE', (err, flights) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ Error: 'Error fetching flights' });
+    }
     res
-    .status(200)
-    .set('Content-Type', 'application/json')
-    .set('Cache-Control', 'no-cache')
-    .json(flights);
-  } 
-  catch (err) 
-  {
-    res.status(500).json({ Error: 'Error fetching flights' });
-  }
+      .status(200)
+      .set('Content-Type', 'application/json')
+      .set('Cache-Control', 'no-cache')
+      .json(flights);
+  });
 };
 
 /**
@@ -75,23 +73,19 @@ exports.getAllFlights = async (req, res) =>
  *        "Error": "Error fetching flights"
  *      }
  */
-exports.getAllScheduledFlights = async (req, res) =>
-{
-  try
-  {
-    const flights = await Flight.findAll({ where: { scheduled: true } });
+exports.getAllScheduledFlights = (req, res) => {
+  connection.query('SELECT * FROM flights WHERE scheduled = TRUE', (err, flights) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ Error: 'Error fetching flights' });
+    }
     res
-    .status(200)
-    .set('Content-Type', 'application/json')
-    .set('Cache-Control', 'no-cache')
-    .json(flights);
-  }
-  catch (err)
-  {
-    res.status(500).json({ Error: 'Error fetching flights' });
-  }
+      .status(200)
+      .set('Content-Type', 'application/json')
+      .set('Cache-Control', 'no-cache')
+      .json(flights);
+  });
 };
-
 
 /**
  * @api {get} /customer/scheduled/:id Get Scheduled Flight
@@ -140,35 +134,28 @@ exports.getAllScheduledFlights = async (req, res) =>
  *        "Error": "Failed: error fetching flight"
  *      }
  */
-exports.getScheduledFlightById = async (req, res) =>
-{
-  try
-  {
-    const flights = await Flight.findOne({
-      where: 
-      {
-        id: req.params.id,
-        scheduled: true, 
-      },
-    });
-    
-    if(flights) 
-    {
-      res
-      .status(200)
-      .set('Content-Type', 'application/json')
-      .set('Cache-Control', 'no-cache')
-      .set('FlightId', req.params.id)
-      .json(flights);
+exports.getScheduledFlightById = (req, res) => {
+  connection.query(
+    'SELECT * FROM flights WHERE id = ? AND scheduled = TRUE',
+    [req.params.id],
+    (err, flights) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ Error: 'error fetching flights' });
+      }
+      if (flights.length > 0) {
+        res
+          .status(200)
+          .set('Content-Type', 'application/json')
+          .set('Cache-Control', 'no-cache')
+          .set('FlightId', req.params.id)
+          .json(flights[0]);
+      } else {
+        res.status(404).json({ Error: 'flight not found' });
+      }
     }
-    else res.status(404).json({ Error: 'flight not found' });
-  }
-  catch (err)
-  {
-    res.status(500).json({ Error: 'error fetching flights' });
-  }
+  );
 };
-
 
 /**
  * @api {patch} /customer/:id Update Flight Schedule
@@ -219,30 +206,50 @@ exports.getScheduledFlightById = async (req, res) =>
  *        "Error": "Failed: error fetching flight"
  *      }
  */
-exports.updateScheduledFlight = async (req, res) =>
-{
-  try
-  {
-    const flight = await Flight.findByPk(req.params.id);
-    if (flight) 
-    {
-      flight.scheduled = req.body.scheduled;
-      await flight.save();
-      res
-      .status(200)
-      .set('Content-Type', 'application/json')
-      .set('Cache-Control', 'no-cache')
-      .set('FlightId', req.params.id)
-      .set('ScheduledSet', req.body.scheduled)
-      .json(flight);
-    } 
-    else 
-    {
-      res.status(404).json({Error: 'Flight not found' });
+exports.updateScheduledFlight = (req, res) => {
+  // First check if flight exists
+  connection.query(
+    'SELECT * FROM flights WHERE id = ?',
+    [req.params.id],
+    (err, flights) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ Error: 'Error fetching flight' });
+      }
+      if (flights.length === 0) {
+        return res.status(404).json({ Error: 'Flight not found' });
+      }
+
+      // Update scheduled status
+      connection.query(
+        'UPDATE flights SET scheduled = ? WHERE id = ?',
+        [req.body.scheduled, req.params.id],
+        (err2) => {
+          if (err2) {
+            console.error(err2);
+            return res.status(500).json({ Error: 'Error updating flight' });
+          }
+
+          // Fetch updated flight
+          connection.query(
+            'SELECT * FROM flights WHERE id = ?',
+            [req.params.id],
+            (err3, updatedFlights) => {
+              if (err3) {
+                console.error(err3);
+                return res.status(500).json({ Error: 'Error fetching updated flight' });
+              }
+              res
+                .status(200)
+                .set('Content-Type', 'application/json')
+                .set('Cache-Control', 'no-cache')
+                .set('FlightId', req.params.id)
+                .set('ScheduledSet', req.body.scheduled)
+                .json(updatedFlights[0]);
+            }
+          );
+        }
+      );
     }
-  }
-  catch (err)
-  {
-    res.status(500).json({Error: 'Error updating flight' });
-  }
-}
+  );
+};

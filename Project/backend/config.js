@@ -1,10 +1,30 @@
-const {Sequelize} = require('sequelize');
+// initialize mysql2
+const mysql = require(`mysql2`);
 
-const sequelize = new Sequelize('airport_sys', 'airport_sys_user', 'mypassword',
-{
-  host: 'localhost',
-  dialect: 'mysql',
-  logging: false
+// local host
+// initialize connection to airport_system_db
+const connection = mysql.createConnection
+({
+  host: `localhost`,
+  user: `root`, // Change to local machine
+  password: `JzPQpOmQ2)^a6`, // Change to local machine
+  database: `airport_system_db`
 });
 
-module.exports = sequelize;
+// run connection
+connection.connect((err) =>
+{
+  // unsuccess
+  if(err) 
+  {
+    console.error(`Error: there was an error connection to airport_system_db:`, err.stack);
+    throw err;
+  }
+  // success
+  console.log(`Backend is not connected to: ${connection.config.database}.`);
+});
+
+
+// export connection
+module.exports = connection;
+
