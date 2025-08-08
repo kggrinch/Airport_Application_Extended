@@ -1,8 +1,9 @@
 const express = require('express');
 const cors = require('cors');
-const sequelize = require('./config');
 const adminRoutes = require('./routes/admin');
 const customerRoutes = require('./routes/customer');
+
+const sequelize = require('./config'); // change
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use('/admin', adminRoutes);
 app.use('/customer', customerRoutes);
 
 // Start server after DB connects
+// Change
 sequelize.sync().then(() =>
 {
   console.log('Database synced');
