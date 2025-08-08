@@ -6,8 +6,8 @@ const mysql = require(`mysql2`);
 const connection = mysql.createConnection
 ({
   host: `localhost`,
-  user: `root`,
-  password: `JzPQpOmQ2)^a6`,
+  user: `root`, // Change to local machine
+  password: `JzPQpOmQ2)^a6`, // Change to local machine
   database: `airport_system_db`
 });
 
