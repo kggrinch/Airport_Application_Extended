@@ -32,12 +32,14 @@ $(document).ready(function()
     // Processes each response flight object received
     function render(data)
     {
-        $('#select_user_form .option').empty(); // clear pervious users
+        var user_select =  $('#select_user_form');
+        user_select.empty(); // clear pervious users
+        user_select.append($(`<option selected value="">Select User</option>`)) // default
         // if(data.length <= 0) $('#data-container .row').append('<h3 class=" text-danger-emphasis">No Flights</h3>'); // If no flights return message
         data.forEach(function(user)
         {
-            var option = $(`<option value="${user.first_name}">${user.first_name}</option>`);
-            $('#select_user_form .option').append(option);
+            var option = $(`<option value="${user.user_id}">User: ${user.user_id}</option>`);
+            user_select.append(option);
         });
     };
     
@@ -46,7 +48,7 @@ $(document).ready(function()
     {
         $.ajax
         ({
-            url: "http://localhost:3000/customer",
+            url: "http://localhost:3000/authentication",
             method: "GET",
             dataType: "json",
             success: render, // render function call upon success
@@ -62,55 +64,16 @@ $(document).ready(function()
 
     // submit form handler
     // upon submission request a post from backend while validating user data
-    $("#createForm").submit(function(event) 
+    $("#fastLoginForm").submit(function(event) 
     {
         event.preventDefault(); // stop default submit behavior
 
-        const flight_number = $(`#flightNumberInput`).val(); // Save flight number
-        const gate = $(`#gateInput`).val(); // save gate number
-        
-        // Create flight object from form inputs
-        const new_flight = 
-        {
-            flight_number: flight_number,
-            airline: $(`#airlineInput`).val(),
-            origin: $(`#originInput`).val(),
-            destination: $(`#destinationInput`).val(),
-            departure_time: $(`#departureTimeInput`).val(),
-            arrival_time: $(`#arrivalTimeInput`).val(),
-            gate: gate
-        }
+        const user_id = $(`#select_user_form`).val();
+        console.log(user_id);
 
-        // Post request to backend endpoint to create new flight via [admin web service]
-        $.ajax
-        ({
-            url: `http://localhost:3000/admin`,
-            method: `POST`,
-            contentType: `application/json`,
-            data: JSON.stringify(new_flight),
-            success: function(response)
-            {
-                showAlert(`success`, `flight ${flight_number} has been successfully created.`);
-                $(`#createForm`).trigger(`reset`); // Clear form inputs
+        if(!user_id) return alert(`Error: no user specified`);
 
-            },
-            error: function(xhr, status, error)
-            {
-                let error_message = `Error: creating flight ${flight_number} failed.`;
-                let error_details = "";
-                const response = JSON.parse(xhr.responseText); // parse xhr error details from backend endpoint
-                const response_error = response.error;
-                
-                // If response error check issue and update error_details with issue
-                if(response_error)
-                {
-                    if(response_error.flight_number_exists) error_details = `Flight ${flight_number} already exists.`;
-                    if(response_error.flight_gate_exists) error_details = `Gate ${gate} occupied.`;
-                }
-                else error_details = "There might be an issue with the data format or connection to the server. Please try again.";
-                showAlert(`error`, error_message, error_details);
-            }
-        });
+        window.location.href = `customer.html?user_id=${user_id}`;
     });
 
 });

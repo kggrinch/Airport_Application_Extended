@@ -23,16 +23,19 @@
             </div>
           </div>
 
-            <div class="col d-flex justify-content-end" id="select_user_form">    
-              <select class="form-select w-auto me-3">
-                <option selected>Select User</option>
-                <!-- Fill user options here -->
-                <option value="flight_number">Search by Flight#:</option>
-              </select>
-            </div>
+            <!-- Testing Purposes -->
+            <form id="fastLoginForm">
+              <div class="col d-flex justify-content-end">    
+                <select class="form-select w-auto me-3" id="select_user_form" required>
+                  <option selected value="">Select User</option>
+                  <!-- Fill user options here -->
+                </select>
+                <button type="submit" class="btn btn-primary rounded-pill">Select User Login</button>
+              </div>
+            </form>
         </div>
 
-        <form id="createForm">
+        <form id="loginForm">
 
             <div class="mb-3">
               <label for="usernameInput" class="form-label">Username:</label>
