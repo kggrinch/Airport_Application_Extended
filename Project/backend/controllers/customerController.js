@@ -1,6 +1,5 @@
 const connection = require('../config');
 
-
 /**
  * @api {get} /customer Get All Unscheduled Flights
  * @apiName GetAllUnscheduledFlights
