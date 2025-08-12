@@ -29,3 +29,6 @@ build/
 
 # Ignore Java target folder
 target/
+
+# Ignore env file 
+.env
