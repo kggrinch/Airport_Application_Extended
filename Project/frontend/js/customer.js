@@ -145,21 +145,6 @@ $(document).ready(function() {
         });
     }
 
-    // Initialize airport dropdown when page loads
-    loadAirports();
-
-    // Handle airport selection change
-    $('#airportSelect').change(function() {
-        const airportId = $(this).val();
-        if (airportId) {
-            fetchFlightsByAirport(airportId);
-        } else {
-            $('#data-container .row').empty();
-        }
-    });
-
-
-
     // Your existing functions (unchanged)
     function schedule_flight(flight_to_schedule) {
         $.ajax({
@@ -207,12 +192,13 @@ $(document).ready(function() {
         });
     }
 
+    // Initialize airport dropdown when page loads
     const urlParams = new URLSearchParams(window.location.search);
     const user_id = urlParams.get('user_id');
     if(user_id)
     {
-        fetchData(); // load cards
         validate_page_selections(user_id);
+        loadAirports();
     }
     else
     {
@@ -220,6 +206,16 @@ $(document).ready(function() {
     }
     
     let selected_search_option; // var used to hold current selected search option.
+
+    // Handle airport selection change
+    $('#airportSelect').change(function() {
+        const airportId = $(this).val();
+        if (airportId) {
+            fetchFlightsByAirport(airportId);
+        } else {
+            $('#data-container .row').empty();
+        }
+    });
 
     // admin/customer switch handler
     // upon switch go to admin.html file
