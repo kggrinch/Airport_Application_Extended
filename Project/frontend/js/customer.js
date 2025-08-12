@@ -82,14 +82,57 @@
 //     });
 
 $(document).ready(function() {
+    
+    // Delete maybe this card shows aiport info but we need flight information
     // Creates bootstrap card elements with flight information
-    function createCard(data) {
+    // function createCard(data) {
+    //     var column = $(`<div class="col-md-3 full_card"></div>`);
+    //     var card = $(`<div class="card text-white border-light"></div>`);
+    //     var cardHeader = $(`<div class="card-header" data-flight_number="${data.flight_number}" data-airline="${data.airline}">Flight #${data.flight_number}</div>`);
+    //     var cardBody = $(`<div class="card-body text-center">
+    //         <h4 class="card-title">${data.airport_name} (${data.code})</h4>
+    //         <p class="card-text">${data.airline}</p>
+    //         </div>`);
+    //     $('#data-container .row').append(column.append(card.append(cardHeader).append(cardBody)));
+    // }
+
+    // function createCard(data) {
+    //     var column = $(`<div class="col-md-3 full_card"></div>`);
+    //     var card = $(`<div class="card text-white border-light"></div>`);
+    //     var cardHeader = $(`<div class="card-header"
+    //         data-flight_number="${data.flight_number}"
+    //         data-airline="${data.airline}"
+    //         data-origin="${data.departure_airport_code}"
+    //         data-destination="${data.arrival_airport_code}"
+    //         data-gate="${data.gate_number}"
+    //         >Flight #${data.flight_number}</div>`);
+    //     var cardBody = $(`<div class="card-body text-center">
+    //         <h4 class="card-title">${data.departure_code} - ${data.arrival_code}</h4>
+    //         <p class="card-text">Gate: ${data.gate_number}</p>
+    //         <p class="card-text">${data.airline}</p>
+    //         <p class="card-text">${new Date(data.departure_time).toLocaleString()}</p>
+    //         </div>`);
+    //     $('#data-container .row').append(column.append(card.append(cardHeader).append(cardBody)));
+    // }
+
+    // actual flight card
+    // schedule and view buttons still need to be created
+    function createCard(data)
+    {
         var column = $(`<div class="col-md-3 full_card"></div>`);
         var card = $(`<div class="card text-white border-light"></div>`);
-        var cardHeader = $(`<div class="card-header" data-flight_number="${data.flight_number}" data-airline="${data.airline}">Flight #${data.flight_number}</div>`);
+        var cardHeader = $(`<div class="card-header"
+            data-flight_number="${data.flight_number}"
+            data-airline="${data.airline}"
+            data-origin="${data.departure_airport_code}"
+            data-destination="${data.arrival_airport_code}"
+            data-gate="${data.gate_number}"
+            >Flight #${data.flight_number}</div>`);
         var cardBody = $(`<div class="card-body text-center">
-            <h4 class="card-title">${data.airport_name} (${data.code})</h4>
-            <p class="card-text">${data.airline}</p>
+            <h4 class="card-title">${data.departure_airport_code} - ${data.arrival_airport_code}</h4>
+            <p class="card-text">Gate: ${data.gate_number}</p>
+                <a href="view.html?from=customer/view&id=${data.id}" class="btn btn-outline-dark rounded-4 text-white" data-flight-id="${data.id}">View</a> 
+                <button class="btn btn-outline-info rounded-4 text-white schedule-btn" data-flight-id="${data.id}">Schedule Flight</button>
             </div>`);
         $('#data-container .row').append(column.append(card.append(cardHeader).append(cardBody)));
     }
@@ -145,7 +188,8 @@ $(document).ready(function() {
         });
     }
 
-    // Your existing functions (unchanged)
+    // Might not need
+    // Function to let customer schedule a flight
     function schedule_flight(flight_to_schedule) {
         $.ajax({
             url: `http://localhost:3000/customer/${flight_to_schedule}`,
