@@ -36,30 +36,32 @@
         </div>
 
         <form id="loginForm">
-
             <div class="mb-3">
               <label for="usernameInput" class="form-label">Username:</label>
-              <input type="text" class="form-control" id="usernameInput" required>
+              <input type="text" class="form-control" id="usernameInput" required placeholder="asmith">
             </div>
 
             <div class="mb-3">
               <label for="passwordInput" class="form-label">Password:</label>
-              <input type="password" class="form-control" id="passwordInput" required>
+              <input type="password" class="form-control" id="passwordInput" required placeholder="pass123">
             </div>
 
             <div class="text-center">
-                <button type="submit" class="btn btn-primary rounded-pill">Login</button>
-                <button type="submit" class="btn btn-secondary rounded-pill">Signup</button>
+                <button type="submit" name="action" value="login" class="btn btn-primary rounded-pill">Login</button>
             </div>
         </form>
+        <div class="text-center mt-2">
+            <button type="submit" name="action" value="signup" class="btn btn-secondary rounded-pill">Signup</button>
+        </div>
+
       </main>
       
-      <footer class="text-center text-white py-3">
+      <!-- <footer class="text-center text-white py-3">
         <p class="mb-0">
           &copy; Kirill Grichanichenko |
           <a href="../backend/docs/index.html">API Document</a>
         </p>
-      </footer>
+      </footer> -->
 
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>

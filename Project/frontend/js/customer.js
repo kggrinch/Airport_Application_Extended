@@ -112,57 +112,20 @@ $(document).ready(function() {
             method: "GET",
             dataType: "json",
             success: render,
-            error: (xhr, status, error) => {
-                console.log(xhr.responseText);
-                $('#data-container .row').html('<h3 class="text-danger-emphasis">Error loading flights</h3>');
+            error: (xhr, status, error) => 
+            {
+                console.log(xhr.responseText)
+                alert(`Failed to fetch flights.\n ${xhr.status}\n${status}\n${error}`);
             }
-        });
+        })
     }
 
-    // Load airports into dropdown
-    function loadAirports() {
-        $.ajax({
-            url: "http://localhost:3000/customer/airports",
-            method: "GET",
-            success: function(airports) {
-                const select = $('#airportSelect');
-                select.empty();
-                select.append('<option value="" selected disabled>Select an Airport</option>');
-                
-                if (airports && airports.length > 0) {
-                    airports.forEach(airport => {
-                        select.append(`<option value="${airport.airport_id}">${airport.airport_name} (${airport.code})</option>`);
-                    });
-                } else {
-                    console.error('No airports received from server');
-                    select.append('<option value="" disabled>No airports available</option>');
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error('Error loading airports:', error);
-                $('#airportSelect').html('<option value="" disabled>Error loading airports</option>');
-            }
-        });
-    }
-
-    // Initialize airport dropdown when page loads
-    loadAirports();
-
-    // Handle airport selection change
-    $('#airportSelect').change(function() {
-        const airportId = $(this).val();
-        if (airportId) {
-            fetchFlightsByAirport(airportId);
-        } else {
-            $('#data-container .row').empty();
-        }
-    });
-});
-
-
-    // Your existing functions (unchanged)
-    function schedule_flight(flight_to_schedule) {
-        $.ajax({
+    // Patch request to backend endpoint to update schedule attribute of flight given id via [customer web service]
+    // flight_to_schedule - flight id of flight to update
+    function schedule_flight(flight_to_schedule)
+    {
+        $.ajax
+        ({
             url: `http://localhost:3000/customer/${flight_to_schedule}`,
             method: "PATCH",
             contentType: 'application/json',
@@ -176,3 +139,127 @@ $(document).ready(function() {
             },
         });
     }
+
+    // Function that is part of the search functionality
+    // Responsible for filtering through each card based on:
+    // Search Type - the select search type
+    // value - current inputted value by user
+    // card - full card element
+    function search_filter(search_type, value, card)
+    {
+        card.filter(function()
+        {
+            const category = $(this).find(`.card-header`).data(search_type).toLowerCase()
+            $(this).toggle(category.indexOf(value) > -1);
+        });
+    }
+
+    function validate_page_selections(user_id)
+    {
+        if (!user_id) return;
+
+        $(`.navbar-nav .nav-link`).each(function ()
+        {
+            const href = $(this).attr(`href`);
+            if(!href) return;
+
+            const url = new URL(href, window.location.href);
+            url.searchParams.set(`user_id`, user_id);
+
+            $(this).attr('href', url.toString());
+        });
+    }
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const user_id = urlParams.get('user_id');
+    if(user_id)
+    {
+        fetchData(); // load cards
+        validate_page_selections(user_id);
+    }
+    else
+    {
+        alert(`No User Selected`);
+    }
+    
+    let selected_search_option; // var used to hold current selected search option.
+
+    // admin/customer switch handler
+    // upon switch go to admin.html file
+    $(`#flexSwitchCheckDefault`).on(`change`, function()
+    {
+        location.href = "admin.html";
+    });
+
+    // update schedule button on card handler
+    // calls update schedule_flight function
+    $(document).on(`click`,`.schedule-btn`, function(event)
+    {
+        flight_to_schedule = event.target.dataset.flightId;
+        schedule_flight(flight_to_schedule);
+    });
+
+    // Search form key press handler
+    // Calls search filter function based on provided search input selected 
+    // and value entered by user upon handler call.
+     $('#searchInput').on('keyup', function() 
+    {
+        var search_value = $(this).val().toLowerCase();
+        var card = $("#data-container .full_card");
+
+        // Search by selected option
+        switch(selected_search_option)
+        {
+            case `flight_number`: 
+                flight_number = `flight_number`;
+                search_filter(flight_number, search_value, card)
+            break;
+            case `airline`: 
+                airline = `airline`;
+                search_filter(airline, search_value, card)
+            break;
+            case `origin`: 
+                origin = `origin`;
+                search_filter(origin, search_value, card)
+            break;
+            case `destination`: 
+                destination = `destination`;
+                search_filter(destination, search_value, card)
+            break;
+            case `gate`: 
+                gate = `gate`;
+                search_filter(gate, search_value, card)
+            break;
+            // Make sure this is a good default
+            default:
+                flight_number = `flight_number`; // used to allow for refreshing of toggle
+                empty_search = ``;
+                $(`#searchInput`).val(``);
+                search_filter(flight_number, empty_search, card);
+                alert(`No search option selected.`)
+        }
+    });
+
+    // Form select handler.
+    // Updates selected search option and clears previous search attempts including toggling off toggled cards
+    $(`.form-select`).on(`change`, function()
+    {
+        $(`#searchInput`).val(``);
+        selected_search_option = $(`.form-select`).val();
+        
+        // Update placeholder based on selected search option
+        const default_option = `Select Search Type`;
+        if(selected_search_option === default_option) $(`#searchInput`).attr(`placeholder`, `Search for...`);     
+        else $(`#searchInput`).attr(`placeholder`, `${selected_search_option}:`
+            .replace(`${selected_search_option}`.charAt(0), `${selected_search_option}`.charAt(0).toUpperCase())
+            .replace(`_`, ` `));
+
+        // Clear toggle and search input on each selection
+        // Pass card, empty string, and dummy type: "flight_number"
+        // to search_filter to reset the toggle.
+        var card = $("#data-container .full_card");
+        var clear_search = ``;
+        var dummy_type = `flight_number`;
+        search_filter(dummy_type, clear_search, card);
+    })
+});
