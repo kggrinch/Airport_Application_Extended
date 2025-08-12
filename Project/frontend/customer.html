@@ -35,31 +35,24 @@
         </div>
       </nav>
 
-      <!-- Main Content Section -->
-      <main>
-        <div class="container mb-3">
-          <div class="row align-items-center">
-            <div class="col">
-              <h3 class="text-dark ">Viewing Available Flights</h3>
-            </div>
-
-            <div class="col d-flex justify-content-end">
-              
-              <select class="form-select w-auto me-3">
-                <option selected>Select Search Type</option>
-                <option value="flight_number">Search by Flight#:</option>
-                <option value="airline">Search by Airline:</option>
-                <option value="origin">Search by Origin:</option>
-                <option value="destination">Search by Destination:</option>
-                <option value="gate">Search by Gate:</option>
-              </select>
-
-              <div>
-                <input type="text" class="form-control" id="searchInput" placeholder="Search for...">
+      <div class="container mb-3">
+            <div class="row align-items-center">
+              <div class="col">
+                <h3 class="text-dark">View Flights by Airport</h3>
               </div>
-
+              <div class="col d-flex justify-content-end">
+                <select class="form-select w-auto" id="airportSelect">
+                  <option value="" selected>Select an Airport</option>
+                  <!-- Options will be populated by JavaScript -->
+                </select>
+              </div>
             </div>
+          </div>
 
+          <div class="container mt-4 mb-4" id="flightsContainer">
+            <div class="row g-3">
+              <!-- Flight cards will be inserted here dynamically -->
+            </div>
           </div>
         </div>
 

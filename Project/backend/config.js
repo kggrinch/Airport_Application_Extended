@@ -7,7 +7,7 @@ const connection = mysql.createConnection
 ({
   host: `localhost`,
   user: `root`, // Change to local machine
-  password: `JzPQpOmQ2)^a6`, // Change to local machine
+  password: `ArtemGrich1541784!`, // Change to local machine
   database: `airport_system_db`
 });
 
