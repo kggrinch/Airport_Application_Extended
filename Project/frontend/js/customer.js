@@ -112,20 +112,57 @@ $(document).ready(function() {
             method: "GET",
             dataType: "json",
             success: render,
-            error: (xhr, status, error) => 
-            {
-                console.log(xhr.responseText)
-                alert(`Failed to fetch flights.\n ${xhr.status}\n${status}\n${error}`);
+            error: (xhr, status, error) => {
+                console.log(xhr.responseText);
+                $('#data-container .row').html('<h3 class="text-danger-emphasis">Error loading flights</h3>');
             }
-        })
+        });
     }
 
-    // Patch request to backend endpoint to update schedule attribute of flight given id via [customer web service]
-    // flight_to_schedule - flight id of flight to update
-    function schedule_flight(flight_to_schedule)
-    {
-        $.ajax
-        ({
+    // Load airports into dropdown
+    function loadAirports() {
+        $.ajax({
+            url: "http://localhost:3000/customer/airports",
+            method: "GET",
+            success: function(airports) {
+                const select = $('#airportSelect');
+                select.empty();
+                select.append('<option value="" selected disabled>Select an Airport</option>');
+                
+                if (airports && airports.length > 0) {
+                    airports.forEach(airport => {
+                        select.append(`<option value="${airport.airport_id}">${airport.airport_name} (${airport.code})</option>`);
+                    });
+                } else {
+                    console.error('No airports received from server');
+                    select.append('<option value="" disabled>No airports available</option>');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error loading airports:', error);
+                $('#airportSelect').html('<option value="" disabled>Error loading airports</option>');
+            }
+        });
+    }
+
+    // Initialize airport dropdown when page loads
+    loadAirports();
+
+    // Handle airport selection change
+    $('#airportSelect').change(function() {
+        const airportId = $(this).val();
+        if (airportId) {
+            fetchFlightsByAirport(airportId);
+        } else {
+            $('#data-container .row').empty();
+        }
+    });
+
+
+
+    // Your existing functions (unchanged)
+    function schedule_flight(flight_to_schedule) {
+        $.ajax({
             url: `http://localhost:3000/customer/${flight_to_schedule}`,
             method: "PATCH",
             contentType: 'application/json',
