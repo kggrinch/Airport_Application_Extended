@@ -26,7 +26,7 @@ $(document).ready(function()
 
         // Append alert to container and insert after form
         alertContainer.append(alertDiv);
-        $("#createForm").after(alertContainer);
+        $("#loginForm").after(alertContainer);
     };
 
     // Processes each response flight object received
@@ -60,6 +60,35 @@ $(document).ready(function()
         });
     };
 
+    function validate_user(usern, pass)
+    {
+        const user_cred = 
+        {
+            username: usern, 
+            password: pass
+        }
+        $.ajax
+        ({
+            url: "http://localhost:3000/authentication/login",
+            method: "POST",
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify(user_cred),
+            success: function(response)
+            {
+                window.location.href = `customer.html?user_id=${response.user_id}`;
+            },
+            error: function(xhr, status, error)
+            {
+                let error_message = `Error: login failed.`;
+                let error_details = "";
+                if(xhr.status === 401) error_details = `Invalid username or password`;
+                else error_details = "There might be an issue with the data format or connection to the server. Please try again.";
+                showAlert(`error`, error_message, error_details);
+            }
+        });
+    };
+
     fetchData();
 
     // submit form handler
@@ -76,4 +105,11 @@ $(document).ready(function()
         window.location.href = `customer.html?user_id=${user_id}`;
     });
 
+    $(`#loginForm`).on(`submit`, function(e)
+    {
+        e.preventDefault();
+        const username = $(`#usernameInput`).val();
+        const password = $(`#passwordInput`).val();
+        validate_user(username, password);
+    });
 });

@@ -21,7 +21,7 @@ connection.connect((err) =>
     throw err;
   }
   // success
-  console.log(`Backend is not connected to: ${connection.config.database}.`);
+  console.log(`Backend is now connected to: ${connection.config.database}.`);
 });
 
 
