@@ -86,8 +86,27 @@ $(document).ready(function()
         });
     }
 
+    function validate_page_selections(user_id)
+    {
+        if (!user_id) return;
+
+        $(`.navbar-nav .nav-link`).each(function ()
+        {
+            const href = $(this).attr(`href`);
+            if(!href) return;
+
+            const url = new URL(href, window.location.href);
+            url.searchParams.set(`user_id`, user_id);
+
+            $(this).attr('href', url.toString());
+        });
+    }
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const user_id = urlParams.get('user_id');
     let selected_search_option; // var used to hold current selected search option.
     fetchData(); // load cards
+    validate_page_selections(user_id);
 
     // admin/customer switch handler
     // upon switch go to admin.html file
