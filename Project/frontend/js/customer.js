@@ -104,9 +104,17 @@ $(document).ready(function()
 
     const urlParams = new URLSearchParams(window.location.search);
     const user_id = urlParams.get('user_id');
+    if(user_id)
+    {
+        fetchData(); // load cards
+        validate_page_selections(user_id);
+    }
+    else
+    {
+        alert(`No User Selected`);
+    }
+    
     let selected_search_option; // var used to hold current selected search option.
-    fetchData(); // load cards
-    validate_page_selections(user_id);
 
     // admin/customer switch handler
     // upon switch go to admin.html file
