@@ -85,4 +85,10 @@ $(document).ready(function() {
     {
         alert(`flight Selected`);
     }
+
+    // handle card click event
+    $(`.card`).on(`click`, function()
+    {
+        
+    })
 });
