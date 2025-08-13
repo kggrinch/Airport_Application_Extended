@@ -42,3 +42,29 @@ exports.getFlightsByAirport = (req, res) => {
     res.status(200).json(flights);
   });
 };
+
+exports.getAvailableSeats = (req, res) => 
+{
+  const flight_number = req.params.id;
+  connection.query(
+    `SELECT seat.seat_number
+    FROM seat
+    WHERE seat.seat_number NOT IN (
+        SELECT ticket.seat_number 
+        FROM ticket
+        WHERE ticket.flight_number = ?
+    )
+    ORDER BY seat.seat_number;
+    `,
+    [flight_number],
+    (err, seats) =>
+    {
+      if (err) 
+      {
+        console.error(err);
+        return res.status(500).json({ Error: 'Error fetching seats' });
+      }
+      res.status(200).json(seats);
+    }
+  )
+}
