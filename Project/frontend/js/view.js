@@ -1,64 +1,73 @@
-$(document).ready(function()
-{
-    // custom alert function
-    // sends a element alert with message
-    // message: - specified message to include in alert
-    function showError(message)
-    {
-        $('table').before(`<div class="alert alert-danger">${message}</div>`);
+$(document).ready(function() {
+    function createDetailItem(label, value) {
+        return `
+            <div class="row mb-2">
+                <div class="col-4 text-white-50 fw-bold">${label}</div>
+                <div class="col-8 text-white">${value ?? 'N/A'}</div>
+            </div>
+        `;
     }
 
-    // Format date from sql for cleaner viewing
-    function parseDate(date)
-    {
-        // parse from sql 
-        return date.replace('T', ' ').substring(0, 16);
-    };
+    function render(data) {
+        const container = $('#flight-details-container');
+        container.empty();
 
-    // Retrieve the flight_id and from parameters from the URL parameters
-    // from - used to manage which file view was called from to correctly backtrack to previous file after viewing
-    const urlParams = new URLSearchParams(window.location.search);
-    const flight_id = urlParams.get('id');
-    const from = urlParams.get('from');
-    if(from === `admin`) $(`.btn-return`).attr("href", "admin.html");
-    if(from === 'customer') $(`.btn-return`).attr("href", "customer.html");
-    if(from === 'scheduled') $(`.btn-return`).attr("href", "scheduled.html");
+        if (data.length <= 0) {
+            container.html(`<h2 class="text-center text-danger-emphasis">No Flight Details Found</h2>`);
+            return;
+        }
 
-    // Render flight info of provided flight via flight_id
-    if (flight_id) 
-    {
-    // Get request to backend endpoint to fetch flight info of specified flight give flight id [admin web service]
-    $.ajax({
-        url: `http://localhost:3000/admin/${encodeURIComponent(flight_id)}`, // admin web service used because it contains function that works with all flights
-        method: 'GET',
-        success: function(data)
-        {
-            if (data)
-            {
-                // Fill table rows with city data and append to table body.
-                const entries = Object.entries(data);
-                for(let i = 0; i < entries.length - 1; i++ )
-                {
-                    let [key, value] = entries[i];
-                    var label = `<td>${key}</td>`;
-                    if(typeof(value) === `string` && value.includes(`:`)) value = parseDate(value); // used to parse date once encountered within the loop 
-                    var input = `<td>${value}</td>`;
-                    $(".table tbody").append(`<tr>${label}${input}</tr>`);
-                }
-            } 
-            else 
-            {
-                showError("Flight not found");
+        const f = data[0];
+        container.append(`<h2 class="text-white mb-4">Flight Details</h2>`);
+
+        container.append(createDetailItem('Airport Name', f.departure_airport_name));
+        container.append(createDetailItem('City', f.departure_city));
+        container.append(createDetailItem('State', f.departure_state));
+        container.append(createDetailItem('ZIP', f.departure_zip));
+        container.append(createDetailItem('From', f.from_code));
+        container.append(createDetailItem('To', f.to_code));
+        container.append(createDetailItem('Boarding Time', new Date(f.boarding_time).toLocaleString()));
+        container.append(createDetailItem('Departure Time', new Date(f.departure_time).toLocaleString()));
+        container.append(createDetailItem('Arrival Time', new Date(f.arrival_time).toLocaleString()));
+        container.append(createDetailItem('Gate #', f.gate_number));
+
+        if (f.flight_price) {
+            container.append(createDetailItem('Flight Price', `$${parseFloat(f.flight_price).toFixed(2)}`));
+        } else {
+            container.append(createDetailItem('Pricing', 'Not Available'));
+        }
+    }
+
+    function fetchFlightDetails(flight_id) {
+        $.ajax({
+            url: `http://localhost:3000/customer/flights/${flight_id}`,
+            method: "GET",
+            dataType: "json",
+            success: render,
+            error: () => {
+                $('#flight-details-container').html(`<h2 class="text-center text-danger-emphasis">Error loading flight details</h2>`);
             }
-        },
-        error: function(xhr, status, error)
-        {
-            showError(`Failed to fetch flights.\n ${xhr.status}\n${status}\n${error}`);
+        });
+    }
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const user_id = urlParams.get('user_id');
+    const flight_id = urlParams.get('flight_id');
+
+    
+    if (flight_id) {
+        fetchFlightDetails(flight_id);
+    } else {
+        $('#flight-details-container').html(`<h2 class="text-center text-danger-emphasis">No Flight Selected</h2>`);
+    }
+
+    
+    // Set return button link
+    $('#returnButton').click(function() {
+        if (user_id) {
+            window.location.href = `customer.html?user_id=${user_id}`;
+        } else {
+            window.location.href = "customer.html";
         }
     });
-    } 
-    else 
-    {
-        showError("No flight specified");
-    }
 });
