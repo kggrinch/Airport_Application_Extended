@@ -142,7 +142,7 @@ $(document).ready(function() {
     // handle reserve button click event
     $(document).on(`click`, `.reserve-btn`, function()
     {
-        const seat_number = this.dataset.seat; // this might work
+        const seat_number = this.dataset.seat;
         const message = `Click Ok to confirm reservation of seat ${seat_number} for flight ${flight_id}`;
         if(!confirm(message)) return;
         const reservation = 

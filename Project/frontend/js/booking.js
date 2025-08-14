@@ -22,7 +22,7 @@ $(document).ready(function() {
                 <td class="text-center">
                     <a href="view.html?user_id=${user_id}&from=booking_pricing&flight_id=${data.flight_number}" class="btn btn-outline-dark rounded-4 btn-sm text-white">View Pricing</a>
                     <a href="view.html?user_id=${user_id}&from=booking_boarding&flight_id=${data.flight_number}" class="btn btn-outline-dark rounded-4 btn-sm text-white">View Boarding Info</a>
-                    <button class="btn btn-outline-danger reserve-btn rounded-4 btn-sm" data-seat="${data.seat_number}">Cancel Flight</button>
+                    <button class="btn btn-outline-danger cancel-reserve-btn rounded-4 btn-sm" data-ticket="${data.ticket_id}">Cancel Flight</button>
                 </td>
             </tr>
         `);
@@ -81,6 +81,27 @@ $(document).ready(function() {
         });
     }
 
+    function delete_ticket(ticket)
+    {
+        $.ajax
+        ({
+            url: `http://localhost:3000/customer/flight/ticket`,
+            method: `DELETE`,
+            contentType: `application/json`,
+            data: JSON.stringify(ticket),
+            success: function()
+            {
+                alert(`Success: Ticket ${ticket.ticket_id} successfully canceled`);
+                fetchUserBookings(user_id);
+            },
+            error: function(xhr, status, error)
+            {
+                alert(`Deletion failed\n ${xhr.status}\n${status}\n${error}`);
+            }
+                
+        })
+    }
+
     // Initialize page
     const urlParams = new URLSearchParams(window.location.search);
     const user_id = urlParams.get('user_id');
@@ -93,4 +114,16 @@ $(document).ready(function() {
         alert(`No User Selected`);
         window.location.href = "authentication.html";
     }
+
+    $(document).on(`click`, `.cancel-reserve-btn`, function()
+    {
+        const ticket_id = this.dataset.ticket;
+        const message = `Click Ok to confirm deletion of ticket ${ticket_id}`;
+        if(!confirm(message)) return;
+        const ticket = 
+        {
+            ticket_id: ticket_id
+        };
+        delete_ticket(ticket);
+    });
 });
