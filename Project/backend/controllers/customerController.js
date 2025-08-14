@@ -92,6 +92,43 @@ exports.getAvailableSeats = (req, res) =>
         return res.status(500).json({ Error: 'Error fetching seats' });
       }
       res.status(200).json(seats);
-    }
-  )
+    });
+}
+
+exports.createTicket = (req, res) =>
+{
+  flight = req.body.flight_id;
+  user = req.body.user_id;
+  seat = req.body.seat_id;
+  connection.query(`
+    INSERT INTO ticket(flight_number, user_id, seat_number) VALUES(?, ?, ?)`,
+    [flight, user, seat],
+    (err, ticket) =>
+    {
+      if(err)
+      {
+        console.error(err);
+        return res.status(400).json({Error: `Failed: Ticket was not created.`})
+      }
+      res.status(201).json({ticket_id: ticket.insertId});
+    });
+}
+
+exports.createBooking = (req, res) =>
+{
+  ticket = req.body.ticket_id;
+  connection.query(`INSERT INTO booking (ticket_id) VALUES(?)`,
+    [ticket],
+    (err, booking) =>
+    {
+      if(err)
+      {
+        console.error(err);
+        return res.status(500).json({Error: `Failed: Booking was not created`})
+      }
+      else
+      {
+        res.status(201).json({Success: "Booking created", booking_id: booking.insertId});
+      }
+    });
 }

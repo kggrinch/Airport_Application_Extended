@@ -6,5 +6,7 @@ router.get('/airports', controller.getAllAirports); // get all airports
 router.get('/airports/:id/flights', controller.getFlightsByAirport); // get flights by airport code
 router.get('/flight/:id/seats', controller.getAvailableSeats); // get available seats of a given flight
 router.get('/flights', controller.getAllFlights); // get all flights
+router.post('/flights/:id/seats/:id', controller.createTicket);
+router.post('/flights/:id/seats/:id/booking', controller.createBooking);
 
 module.exports = router;
