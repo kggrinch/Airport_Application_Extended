@@ -84,6 +84,46 @@ $(document).ready(function() {
         $('.btn-return').attr('href', href);
     }
 
+    function create_booking(new_ticket_id)
+    {
+        $.ajax
+        ({
+            url: `http://localhost:3000/customer/flight/ticket/booking`,
+            method: `POST`,
+            contentType: `application/json`,
+            data: JSON.stringify(new_ticket_id),
+            success: function(res)
+            {
+                alert(`Success: Seat reserved successfully`);
+                loadSeats(); // refresh seats
+            },
+            error: function(xhr, status, error)
+            {
+                alert(`Reservation failed\n ${xhr.status}\n${status}\n${error}`);
+            }
+        });
+    }
+
+    function reserve_ticket(reservation)
+    {
+        $.ajax
+        ({
+            url: `http://localhost:3000/customer/flight/ticket`,
+            method: `POST`,
+            contentType: `application/json`,
+            data: JSON.stringify(reservation),
+            success: function(res)
+            {
+                const new_ticket_id = {ticket_id: `${res.ticket_id}`}
+                create_booking(new_ticket_id);
+            },
+            error: function(xhr, status, error)
+            {
+                alert(`Reservation failed\n ${xhr.status}\n${status}\n${error}`);
+            }
+        });
+    };
+
     // Initialize airport dropdown when page loads
     const urlParams = new URLSearchParams(window.location.search);
     const user_id = urlParams.get('user_id');
@@ -98,4 +138,19 @@ $(document).ready(function() {
     {
         alert(`No flight or user selected`);
     }
+
+    // handle reserve button click event
+    $(document).on(`click`, `.reserve-btn`, function()
+    {
+        const seat_number = this.dataset.seat; // this might work
+        const message = `Click Ok to confirm reservation of seat ${seat_number} for flight ${flight_id}`;
+        if(!confirm(message)) return;
+        const reservation = 
+        {
+            flight_id: flight_id,
+            user_id: user_id,
+            seat_number: seat_number
+        };
+        reserve_ticket(reservation);
+    });
 });
