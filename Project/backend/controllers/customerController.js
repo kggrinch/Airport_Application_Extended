@@ -92,8 +92,61 @@ exports.getAvailableSeats = (req, res) =>
         return res.status(500).json({ Error: 'Error fetching seats' });
       }
       res.status(200).json(seats);
-    }
-  )
+    });
+}
+
+exports.createTicket = (req, res) =>
+{
+  const flight = req.body.flight_id;
+  const user = req.body.user_id;
+  const seat = req.body.seat_number;
+  console.log(`flight: ${flight}, user: ${user}, seat: ${seat}`);
+  
+  connection.query(`
+    INSERT INTO ticket(flight_number, user_id, seat_number) VALUES(?, ?, ?)`,
+    [flight, user, seat],
+    (err, ticket) =>
+    {
+      if(err)
+      {
+        console.error(err);
+        return res.status(400).json({Error: `Failed: Ticket was not created.`})
+      }
+      res.status(201).json({ticket_id: ticket.insertId});
+    });
+}
+
+exports.createBooking = (req, res) =>
+{
+  const ticket = req.body.ticket_id;
+  connection.query(`INSERT INTO booking (ticket_id) VALUES(?)`,
+    [ticket],
+    (err, booking) =>
+    {
+      if(err)
+      {
+        console.error(err);
+        return res.status(500).json({Error: `Failed: Booking was not created`})
+      }
+      res.status(201).json({Success: "Booking created", booking_id: booking.insertId});
+    });
+}
+
+exports.deleteTicket = (req, res) =>
+{
+  // This query deletes the ticket given ticket_id. However, it is also possible to delete the ticket given flight number and seat number.
+  const ticket = req.body.ticket_id;
+  connection.query(`DELETE FROM ticket WHERE ticket_id = ?`,
+    [ticket],
+    (err, result) =>
+    {
+      if(err)
+      {
+        console.log(err);
+        return res.status(500).json({Error: `Failed: Booking and Ticket not deleted`});
+      }
+      res.status(200).json({Success: `Success: ticket ${ticket} successfully deleted`});
+    });
 }
 
 exports.getBookingsByUser = (req, res) => {
