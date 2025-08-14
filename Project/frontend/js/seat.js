@@ -4,9 +4,7 @@ $(document).ready(function() {
     function render(allSeats, availableSeats)
     {
         // clears all tables. See if there is a more one line way to clear the table.
-        $('#firstClassBody').empty();
-        $('#businessClassBody').empty();
-        $('#economyClassBody').empty();
+        $('table tbody').empty();
 
         for(let i = 0; i < 3; i++)
         {
