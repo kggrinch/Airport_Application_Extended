@@ -9,5 +9,6 @@ router.get('/flights', controller.getAllFlights); // get all flights
 router.post('/flight/ticket', controller.createTicket);            // router.post('/:customer_id/flights/:flight_id/seats/:seat_id', controller.createTicket);
 router.post('/flight/ticket/booking', controller.createBooking);   // router.post('/:customer_id/flights/:flight_id/seats/:seat_id/booking', controller.createBooking);
 router.delete('/flight/ticket', controller.deleteTicket); // delete ticket deletes the booking which cascades to the ticket.
+router.get('/:id/bookings', controller.getBookingsByUser); // get bookings for a user
 
 module.exports = router;

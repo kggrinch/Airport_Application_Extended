@@ -148,3 +148,45 @@ exports.deleteTicket = (req, res) =>
       res.status(200).json({Success: `Success: ticket ${ticket} successfully deleted`});
     });
 }
+
+exports.getBookingsByUser = (req, res) => {
+  const user_id = req.params.id; // Now getting from params instead of query
+  
+  connection.query(
+    `SELECT 
+      ticket.ticket_id,
+      ticket.flight_number,
+      seat.seat_number,
+      class.class_type,
+      booking.booking_date,
+      booking.flight_price,
+      booking.seat_price,
+      booking.tax,
+      booking.total_price,
+      customer.first_name,
+      customer.last_name,
+      departure_airport.code AS departure_airport_code,
+      arrival_airport.code AS arrival_airport_code,
+      flight.gate_number
+    FROM booking
+    JOIN ticket ON booking.ticket_id = ticket.ticket_id
+    JOIN customer ON ticket.user_id = customer.user_id
+    JOIN seat ON ticket.seat_number = seat.seat_number
+    JOIN class ON seat.class_type = class.class_type
+    JOIN flight ON ticket.flight_number = flight.flight_number
+    JOIN airport departure_airport 
+      ON flight.departure_airport_id = departure_airport.airport_id
+    JOIN airport arrival_airport 
+      ON flight.arrival_airport_id = arrival_airport.airport_id
+    WHERE customer.user_id = ?
+    ORDER BY booking.booking_date DESC`,
+    [user_id],
+    (err, bookings) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ Error: 'Error fetching bookings' });
+      }
+      res.status(200).json(bookings);
+    }
+  );
+};
