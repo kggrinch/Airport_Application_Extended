@@ -3,34 +3,58 @@ $(document).ready(function() {
     // Processes each response flight object received
     function render(allSeats, availableSeats)
     {
-        // $(`.container .seat-board`).empty(); // clear all seats
+        // clears all tables. See if there is a more one line way to clear the table.
+        $('#firstClassBody').empty();
+        $('#businessClassBody').empty();
+        $('#economyClassBody').empty();
 
         for(let i = 0; i < 3; i++)
         {
             const seat = allSeats[i];
             const isAvailable = availableSeats.includes(seat);
-            var card = $(`<div class="card btn btn-outline-secondary">${seat}</div>`);
-            if(isAvailable) card.addClass("available");
-            else card.addClass("unavailable");
-            $(`#first_class`).append(card);
+            var first_price = `$700.00`
+            var row = $(`<tr>
+                <td>${flight_id}</td>
+                <td>${seat}</td>
+                <td>
+                    ${first_price}
+                    <button class="btn btn-primary reserve-btn rounded-4" data-seat="${seat}">Reserve</button>
+                </td>
+                </tr>`)
+            if(!isAvailable) row.find(`button.reserve-btn`).prop(`disabled`, true).text(`Unavailable`).removeClass(`btn-primary`).addClass(`btn-outline-primary btn-sm`);
+            $(`#firstClassBody`).append(row);
         }
         for(let i = 3; i < 6; i++)
         {
             const seat = allSeats[i];
             const isAvailable = availableSeats.includes(seat);
-            var card = $(`<div class="card btn btn-outline-secondary">${seat}</div>`);
-            if(isAvailable) card.addClass("available");
-            else card.addClass("unavailable");
-            $(`#business_class`).append(card);
+            var business_price = `$350.00`
+            var row = $(`<tr>
+                <td>${flight_id}</td>
+                <td>${seat}</td>
+                <td>
+                    ${business_price}
+                    <button class="btn btn-primary reserve-btn rounded-4" data-seat="${seat}">Reserve</button>
+                </td>
+                </tr>`)
+            if(!isAvailable) row.find(`button.reserve-btn`).prop(`disabled`, true).text(`Unavailable`).removeClass(`btn-primary`).addClass(`btn-outline-primary btn-sm`);
+            $(`#businessClassBody`).append(row);
         }
         for(let i = 6; i < 10; i++)
         {
             const seat = allSeats[i];
             const isAvailable = availableSeats.includes(seat);
-            var card = $(`<div class="card btn btn-outline-secondary">${seat}</div>`);
-            if(isAvailable) card.addClass("available");
-            else card.addClass("unavailable");
-            $(`#economy_class`).append(card);
+            var economy_price = `$100.00`
+            var row = $(`<tr>
+                <td>${flight_id}</td>
+                <td>${seat}</td>
+                <td>
+                    ${economy_price}
+                    <button class="btn btn-primary reserve-btn rounded-4" data-seat="${seat}">Reserve</button>
+                </td>
+                </tr>`)
+            if(!isAvailable) row.find(`button.reserve-btn`).prop(`disabled`, true).text(`Unavailable`).removeClass(`btn-primary`).addClass(`btn-outline-primary btn-sm`);
+            $(`#economyClassBody`).append(row);
         }
     };
 
