@@ -5,17 +5,25 @@ $(document).ready(function() {
         const flight_price = parseFloat(data.flight_price);
         const seat_price = parseFloat(data.seat_price);
         const total_price = parseFloat(data.total_price);
-        
+
+        // <td>${new Date(data.booking_date).toLocaleString()}</td> // used in formatting the date
+        // <td>$${flight_price.toFixed(2)}</td> // used in formatting the pricing
+        // <td>$${seat_price.toFixed(2)}</td>
+        // <td>$${total_price.toFixed(2)}</td>
+
         const row = $(`
             <tr>
                 <td>${data.ticket_id}</td>
                 <td>${data.flight_number}</td>
+                <td>${data.departure_airport_code}</td>
+                <td>${data.arrival_airport_code}</td>
                 <td>${data.seat_number}</td>
                 <td>${data.class_type}</td>
-                <td>${new Date(data.booking_date).toLocaleString()}</td>
-                <td>$${flight_price.toFixed(2)}</td>
-                <td>$${seat_price.toFixed(2)}</td>
-                <td>$${total_price.toFixed(2)}</td>
+                <td class="text-center">
+                    <a href="view.html?user_id=${user_id}&from=booking_pricing&flight_id=${data.flight_number}" class="btn btn-outline-dark rounded-4 btn-sm text-white">View Pricing</a>
+                    <a href="view.html?user_id=${user_id}&from=booking_boarding&flight_id=${data.flight_number}" class="btn btn-outline-dark rounded-4 btn-sm text-white">View Boarding Info</a>
+                    <button class="btn btn-outline-danger reserve-btn rounded-4 btn-sm" data-seat="${data.seat_number}">Cancel Flight</button>
+                </td>
             </tr>
         `);
         $('#bookingTableBody').append(row);
@@ -23,7 +31,7 @@ $(document).ready(function() {
 
     // Processes each response booking object received
     function render(data) {
-        console.log("Received data:", data); // Debug log
+        console.log("Received data:", data); // Debugging
         $('#bookingTableBody').empty();
         
         if(data.length <= 0) {
