@@ -77,20 +77,11 @@ $(document).ready(function() {
         });
     }
     
+    // update return button to holds userid parameter
     function validate_page_selections(user_id)
     {
-        if (!user_id) return;
-
-        $(`.navbar-nav .nav-link`).each(function ()
-        {
-            const href = $(this).attr(`href`);
-            if(!href) return;
-
-            const url = new URL(href, window.location.href);
-            url.searchParams.set(`user_id`, user_id);
-
-            $(this).attr('href', url.toString());
-        });
+        const href = `customer.html?user_id=${user_id}`;
+        $('.btn-return').attr('href', href);
     }
 
     // Initialize airport dropdown when page loads
@@ -98,19 +89,13 @@ $(document).ready(function() {
     const user_id = urlParams.get('user_id');
     const flight_id = urlParams.get('flight_id');
     const allSeats = ["A1", "A2", "A3", "B1", "B2", "B3","C1", "C2", "C3", "C4"];
-    if(flight_id)
+    if(flight_id && user_id)
     {
-        // validate_page_selections(user_id);
+        validate_page_selections(user_id);
         loadSeats();
     }
     else
     {
-        alert(`flight Selected`);
+        alert(`No flight or user selected`);
     }
-
-    // handle card click event
-    $(`.card`).on(`click`, function()
-    {
-        
-    })
 });
