@@ -262,3 +262,21 @@ exports.getBoardingDetails = (req, res) =>
     res.status(200).json(boarding);
   });
 };
+
+exports.getPricingDetails = (req, res) =>
+{
+  const ticket = req.params.id;
+  connection.query(`SELECT booking_date, flight_price, seat_price, tax, total_price
+  FROM booking
+  WHERE ticket_id = ?`,
+  [ticket],
+  (err, pricing) =>
+  {
+    if(err)
+    {
+      console.log(err);
+      return res.status(500).json({Error: `Error fetching pricing details`});
+    }
+    res.status(200).json(pricing);
+  });
+};

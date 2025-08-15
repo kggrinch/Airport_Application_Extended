@@ -8,7 +8,8 @@ router.get('/airports/:id/flights', controller.getFlightsByAirport); // get flig
 router.get('/flight/:id/seats', controller.getAvailableSeats); // get available seats of a given flight
 router.get('/:id/bookings', controller.getBookingsByUser); // get bookings for a user
 router.get('/flights/:id', controller.getFlightDetails); // get flight details by flight ID
-router.get('/flight/:id/boarding', controller.getBoardingDetails) // get boarding info
+router.get('/flight/:id/boarding', controller.getBoardingDetails); // get boarding info of a specific flight
+router.get('/flight/ticket/:id/pricing', controller.getPricingDetails); // get pricing info of a specific ticket
 
 router.post('/flight/ticket', controller.createTicket);            // router.post('/:customer_id/flights/:flight_id/seats/:seat_id', controller.createTicket);
 router.post('/flight/ticket/booking', controller.createBooking);   // router.post('/:customer_id/flights/:flight_id/seats/:seat_id/booking', controller.createBooking);

@@ -48,7 +48,7 @@ $(document).ready(function() {
         }
 
         const b = data[0];
-        container.append(`<h2 class="text-white mb-4">Flight ${flight_id} Boarding Details</h2>`);
+        container.append(`<h2 class="text-white mb-4">${flight_id} Boarding Details</h2>`);
 
         container.append(createDetailItem('Gate #', b.gate_number));
         container.append(createDetailItem('Boarding Time', new Date(b.boarding_time).toLocaleString()));
@@ -56,10 +56,28 @@ $(document).ready(function() {
         container.append(createDetailItem('Arrival Time', new Date(b.arrival_time).toLocaleString()));
     };
 
-
-    function fetchFlightDetails(flight_id) {
+    function render_pricing_details(data)
+    {
         const container = $('#flight-details-container');
         container.empty();
+
+        if (data.length <= 0) {
+            container.html(`<h2 class="text-center text-danger-emphasis">No Flight Details Found</h2>`);
+            return;
+        }
+
+        const p = data[0];
+        container.append(`<h2 class="text-white mb-4">Ticket: ${ticket_id} Pricing Details</h2>`);
+
+        container.append(createDetailItem('Booking Date:', new Date(p.booking_date).toLocaleString()));
+        container.append(createDetailItem('Flight Price:', `$${parseFloat(p.flight_price).toFixed(2)}`));
+        container.append(createDetailItem(`Seat Price`, `$${parseFloat(p.seat_price).toFixed(2)}`));
+        container.append(createDetailItem('Tax:', `$${parseFloat(p.tax).toFixed(2)}`));
+        container.append(createDetailItem('Total Price:', `$${parseFloat(p.total_price).toFixed(2)}`));
+    };
+
+
+    function fetchFlightDetails(flight_id) {
         $.ajax({
             url: `http://localhost:3000/customer/flights/${flight_id}`,
             method: "GET",
@@ -69,18 +87,24 @@ $(document).ready(function() {
                 $('#flight-details-container').html(`<h2 class="text-center text-danger-emphasis">Error loading flight details</h2>`);
             }
         });
-    }
+    };
 
-    function fetchTicketPricing()
+    function fetchTicketPricing(ticket_id)
     {
-       const container = $('#flight-details-container');
-        container.empty();
+       $.ajax
+       ({
+        url: `http://localhost:3000/customer/flight/ticket/${ticket_id}/pricing`,
+        method: `GET`,
+        dataType: "json",
+        success: render_pricing_details,
+        error: () => {
+                $('#flight-details-container').html(`<h2 class="text-center text-danger-emphasis">Error loading flight details</h2>`);
+            }
+       });
     }
 
     function fetchBoardingInfo(flight_id)
     {
-        const container = $('#flight-details-container');
-        container.empty();
         $.ajax({
             url: `http://localhost:3000/customer/flight/${flight_id}/boarding`,
             method: "GET",
@@ -93,16 +117,19 @@ $(document).ready(function() {
     }
 
     const urlParams = new URLSearchParams(window.location.search);
-    const user_id = urlParams.get('user_id');
-    const flight_id = urlParams.get('flight_id');
+    const user_id = urlParams.get(`user_id`);
+    const flight_id = urlParams.get(`flight_id`);
+    const ticket_id = urlParams.get(`ticket_id`);
     const from = urlParams.get(`from`);
+
+    // maybe try refactoring to retrieve all details given the ticket_id
     switch(from)
     {
         case `view`:
             fetchFlightDetails(flight_id);
         break;
         case `booking_pricing`:
-            fetchTicketPricing();
+            fetchTicketPricing(ticket_id);
         break;
         case `booking_boarding`:
             fetchBoardingInfo(flight_id);

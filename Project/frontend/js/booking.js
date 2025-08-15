@@ -20,8 +20,8 @@ $(document).ready(function() {
                 <td>${data.seat_number}</td>
                 <td>${data.class_type}</td>
                 <td class="text-center">
-                    <a href="view.html?user_id=${user_id}&from=booking_pricing&flight_id=${data.flight_number}" class="btn btn-outline-dark rounded-4 btn-sm text-white">View Pricing</a>
-                    <a href="view.html?user_id=${user_id}&from=booking_boarding&flight_id=${data.flight_number}" class="btn btn-outline-dark rounded-4 btn-sm text-white">View Boarding Info</a>
+                    <a href="view.html?user_id=${user_id}&from=booking_pricing&flight_id=${data.flight_number}&ticket_id=${data.ticket_id}" class="btn btn-outline-dark rounded-4 btn-sm text-white">View Pricing</a>
+                    <a href="view.html?user_id=${user_id}&from=booking_boarding&flight_id=${data.flight_number}&ticket_id=${data.ticket_id}" class="btn btn-outline-dark rounded-4 btn-sm text-white">View Boarding Info</a>
                     <button class="btn btn-outline-danger cancel-reserve-btn rounded-4 btn-sm" data-ticket="${data.ticket_id}">Cancel Flight</button>
                 </td>
             </tr>
