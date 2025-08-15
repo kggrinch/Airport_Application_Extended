@@ -17,7 +17,7 @@ exports.getAllCustomers = (req, res) => {
   });
 };
 
-// Create login call
+// Get customer userid given username and password (login functionality)
 exports.getCustomerLogin = (req, res) =>
 {
   const username = req.body.username;
