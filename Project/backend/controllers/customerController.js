@@ -180,43 +180,24 @@ exports.getFlightDetails = (req, res) =>
 {
   const flight_number = req.params.id;
 
-  connection.query(
-    `SELECT
-      dep_airport.airport_name AS departure_airport_name,
-      dep_location.city AS departure_city,
-      dep_location.state AS departure_state,
-      dep_location.location_zip AS departure_zip,
-      dep_airport.code AS from_code,
-
-      arr_airport.airport_name AS arrival_airport_name,
-      arr_location.city AS arrival_city,
-      arr_location.state AS arrival_state,
-      arr_location.location_zip AS arrival_zip,
-      arr_airport.code AS to_code,
-
-      flight.boarding_time,
-      flight.departure_time,
-      flight.arrival_time,
-      flight.gate_number,
-
-      booking.seat_price,
-      booking.flight_price,
-      booking.total_price
-
-    FROM flight
-    JOIN airport dep_airport 
-      ON flight.departure_airport_id = dep_airport.airport_id
-    JOIN airport_location dep_location 
-      ON dep_airport.location_zip = dep_location.location_zip
-    JOIN airport arr_airport 
-      ON flight.arrival_airport_id = arr_airport.airport_id
-    JOIN airport_location arr_location 
-      ON arr_airport.location_zip = arr_location.location_zip
-    LEFT JOIN ticket 
-      ON flight.flight_number = ticket.flight_number
-    LEFT JOIN booking 
-      ON ticket.ticket_id = booking.ticket_id
-    WHERE flight.flight_number = ?;`,
+  connection.query(`SELECT
+    flight.flight_number, 
+    flight.airline,
+    airport.code AS departure_airport, 
+    arrival_airport.code AS arrival_airport, 
+    flight.boarding_time,
+    flight.departure_time,
+    flight.arrival_time,
+    flight.gate_number,
+    airport.airport_name, 
+    airport_location.city, 
+    airport_location.state, 
+    airport_location.location_zip
+  FROM flight
+    JOIN airport ON flight.departure_airport_id = airport.airport_id
+    JOIN airport_location on airport.location_zip = airport_location.location_zip
+    JOIN airport AS arrival_airport ON flight.arrival_airport_id = arrival_airport.airport_id
+  WHERE flight_number = ?`,
     [flight_number],
     (err, flightDetails) =>
     {
