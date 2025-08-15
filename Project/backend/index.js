@@ -15,7 +15,6 @@ app.use((err, req, res, next) => // set error handling
 });
 
 // Routes
-// app.use('/admin', adminRoutes);
 app.use(`/authentication`, authenticationRoutes);
 app.use('/customer', customerRoutes);
 
