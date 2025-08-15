@@ -12,10 +12,9 @@ $(document).ready(function() {
             const isAvailable = availableSeats.includes(seat);
             var first_price = `$700.00`
             var row = $(`<tr>
-                <td>${flight_id}</td>
                 <td>${seat}</td>
+                <td>${first_price}</td>
                 <td>
-                    ${first_price}
                     <button class="btn btn-primary reserve-btn rounded-4" data-seat="${seat}">Reserve</button>
                 </td>
                 </tr>`)
@@ -28,10 +27,9 @@ $(document).ready(function() {
             const isAvailable = availableSeats.includes(seat);
             var business_price = `$350.00`
             var row = $(`<tr>
-                <td>${flight_id}</td>
                 <td>${seat}</td>
+                <td>${business_price}</td>
                 <td>
-                    ${business_price}
                     <button class="btn btn-primary reserve-btn rounded-4" data-seat="${seat}">Reserve</button>
                 </td>
                 </tr>`)
@@ -44,10 +42,9 @@ $(document).ready(function() {
             const isAvailable = availableSeats.includes(seat);
             var economy_price = `$100.00`
             var row = $(`<tr>
-                <td>${flight_id}</td>
                 <td>${seat}</td>
+                <td>${economy_price}</td>
                 <td>
-                    ${economy_price}
                     <button class="btn btn-primary reserve-btn rounded-4" data-seat="${seat}">Reserve</button>
                 </td>
                 </tr>`)
@@ -124,6 +121,11 @@ $(document).ready(function() {
         });
     };
 
+    function update_title(flight_id)
+    {
+        $(`h1`).text(`${flight_id} Seat Selection`);
+    }
+
     // Initialize airport dropdown when page loads
     const urlParams = new URLSearchParams(window.location.search);
     const user_id = urlParams.get('user_id');
@@ -132,6 +134,7 @@ $(document).ready(function() {
     if(flight_id && user_id)
     {
         validate_page_selections(user_id);
+        update_title(flight_id);
         loadSeats();
     }
     else
