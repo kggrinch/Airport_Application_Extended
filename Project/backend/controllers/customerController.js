@@ -244,3 +244,21 @@ exports.getFlightDetails = (req, res) =>
     }
   );
 };
+
+exports.getBoardingDetails = (req, res) =>
+{
+  const flight = req.params.id;
+  connection.query(`SELECT gate_number, boarding_time, departure_time, arrival_time
+    FROM flight
+    WHERE flight_number = ?`,
+  [flight],
+  (err, boarding) =>
+  {
+    if(err)
+    {
+      console.log(err);
+      return res.status(500).json({Error: `Error fetching boarding details`});
+    }
+    res.status(200).json(boarding);
+  });
+};
