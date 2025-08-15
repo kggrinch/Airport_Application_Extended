@@ -20,22 +20,20 @@ $(document).ready(function() {
         const f = data[0];
         container.append(`<h2 class="text-white mb-4">Flight Details</h2>`);
 
-        container.append(createDetailItem('Airport Name', f.departure_airport_name));
-        container.append(createDetailItem('City', f.departure_city));
-        container.append(createDetailItem('State', f.departure_state));
-        container.append(createDetailItem('ZIP', f.departure_zip));
-        container.append(createDetailItem('From', f.from_code));
-        container.append(createDetailItem('To', f.to_code));
+        container.append(createDetailItem('Flight #', f.flight_number));
+        container.append(createDetailItem('Airline', f.airline));
+        container.append(createDetailItem('From', f.departure_airport));
+        container.append(createDetailItem('To', f.arrival_airport));
         container.append(createDetailItem('Boarding Time', new Date(f.boarding_time).toLocaleString()));
         container.append(createDetailItem('Departure Time', new Date(f.departure_time).toLocaleString()));
         container.append(createDetailItem('Arrival Time', new Date(f.arrival_time).toLocaleString()));
         container.append(createDetailItem('Gate #', f.gate_number));
-
-        if (f.flight_price) {
-            container.append(createDetailItem('Flight Price', `$${parseFloat(f.flight_price).toFixed(2)}`));
-        } else {
-            container.append(createDetailItem('Pricing', 'Not Available'));
-        }
+        container.append(createDetailItem('Airport Name', f.airport_name));
+        container.append(createDetailItem('City', f.city));
+        container.append(createDetailItem('State', f.state));
+        container.append(createDetailItem('ZIP', f.location_zip));
+        container.append(createDetailItem('', '')); // breakline
+        container.append(createDetailItem('Flight Price', `$${parseFloat(150.00).toFixed(2)}`));
     };
 
     function render_boarding_details(data) {
