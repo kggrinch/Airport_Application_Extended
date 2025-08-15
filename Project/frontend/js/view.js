@@ -67,7 +67,7 @@ $(document).ready(function() {
         }
 
         const p = data[0];
-        container.append(`<h2 class="text-white mb-4">Ticket: ${ticket_id} Pricing Details</h2>`);
+        container.append(`<h2 class="text-white mb-4">Ticket ${ticket_id} Pricing Details</h2>`);
 
         container.append(createDetailItem('Booking Date:', new Date(p.booking_date).toLocaleString()));
         container.append(createDetailItem('Flight Price:', `$${parseFloat(p.flight_price).toFixed(2)}`));
