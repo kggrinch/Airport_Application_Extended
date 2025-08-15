@@ -115,13 +115,13 @@ $(document).ready(function() {
     $('#returnButton').click(function() 
     {
         // add logic to return to the correct front-end based from the from parameter
-        if (user_id) 
+        if (user_id && from === `view`) 
         {
             window.location.href = `customer.html?user_id=${user_id}`;
         } 
         else 
         {
-            window.location.href = "authentication.html";
+            window.location.href = `booking.html?user_id=${user_id}`;
         }
     });
 });
