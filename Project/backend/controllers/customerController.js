@@ -1,5 +1,6 @@
 const connection = require('../config');
 
+// Retrieve all airports
   exports.getAllAirports = (req, res) => {
   connection.query(`
     SELECT *
@@ -14,6 +15,10 @@ const connection = require('../config');
   });
 };
 
+// Retrieve all flights at a given airport 
+// Query 8 of part C phase 2 (1/4 queries from part c phase 2)
+// Purpose: Show all flights at an airport, including its name and code.
+// Expected: List of flight numbers, airline names, and departure airport details.
 exports.getFlightsByAirport = (req, res) => {
   const airport_id = req.params.id;
   connection.query(
@@ -43,6 +48,7 @@ exports.getFlightsByAirport = (req, res) => {
   });
 };
 
+// Retrieve all flight at all airports
 exports.getAllFlights = (req, res) => {
   connection.query(
     `SELECT 
@@ -70,6 +76,10 @@ exports.getAllFlights = (req, res) => {
   );
 };
 
+// Retrieve available seats at a given flight
+// Query 6 of part C phase 2 (2/4 queries from part c phase 2)
+// Purpose: List available seat numbers for given flight 
+// Expected: List of seat numbers that are still available for the given flight.
 exports.getAvailableSeats = (req, res) => 
 {
   const flight_number = req.params.id;
@@ -95,6 +105,7 @@ exports.getAvailableSeats = (req, res) =>
     });
 }
 
+// Create new ticket
 exports.createTicket = (req, res) =>
 {
   const flight = req.body.flight_id;
@@ -116,6 +127,7 @@ exports.createTicket = (req, res) =>
     });
 }
 
+// create new booking of new ticket (works directly with createTicket endpoint)
 exports.createBooking = (req, res) =>
 {
   const ticket = req.body.ticket_id;
@@ -132,6 +144,7 @@ exports.createBooking = (req, res) =>
     });
 }
 
+// delete ticket
 exports.deleteTicket = (req, res) =>
 {
   // This query deletes the ticket given ticket_id. However, it is also possible to delete the ticket given flight number and seat number.
@@ -149,6 +162,10 @@ exports.deleteTicket = (req, res) =>
     });
 }
 
+// Retrieve all booking information given user id
+// Query 7 of part C phase 2 (3/4 queries from part c phase 2)
+// Purpose: List available seat numbers for given flight
+// Expected: Seat numbers marked as available for the specific flight.
 exports.getBookingsByUser = (req, res) => {
   const user_id = req.params.id; 
   connection.query(`SELECT 
@@ -176,6 +193,10 @@ exports.getBookingsByUser = (req, res) => {
   );
 };
 
+// Gets all flight details of a given flight
+// Query 10 of part C phase 2 (4/4 queries from part c phase 2)
+// Purpose: Get all flight details of a given flight including the airport and airport location of the flight
+// Expected: List of flights with their flight information, boarding details, and airport with location details.
 exports.getFlightDetails = (req, res) => 
 {
   const flight_number = req.params.id;
@@ -211,6 +232,7 @@ exports.getFlightDetails = (req, res) =>
   );
 };
 
+// Retrieve all boarding details of a given flight
 exports.getBoardingDetails = (req, res) =>
 {
   const flight = req.params.id;
@@ -229,6 +251,7 @@ exports.getBoardingDetails = (req, res) =>
   });
 };
 
+// Retrieve pricing details of a given ticket
 exports.getPricingDetails = (req, res) =>
 {
   const ticket = req.params.id;

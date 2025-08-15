@@ -475,16 +475,25 @@ ORDER BY seat.seat_number;
 
 -- *************************** 
 -- Query 10
--- Purpose: Get flight, airline, gate number, and boarding time with proper frontend formatting
--- Expected: List of flights with their boarding details.
-SELECT 
-    flight.flight_number AS flight,
-    flight.airline AS airline,
-    airport.airport_name AS airport,
-    flight.gate_number AS gate,
-    flight.boarding_time AS boarding
-FROM flight
-JOIN airport 
-    ON flight.departure_airport_id = airport.airport_id;
+-- Purpose: Get all flight details of a given flight including the airport and airport location of the flight
+-- Expected: List of flights with their flight information, boarding details, and airport with location details.
+SELECT
+    flight.flight_number, 
+    flight.airline,
+    airport.code AS departure_airport, 
+    arrival_airport.code AS arrival_airport, 
+    flight.boarding_time,
+    flight.departure_time,
+    flight.arrival_time,
+    flight.gate_number,
+    airport.airport_name, 
+    airport_location.city, 
+    airport_location.state, 
+    airport_location.location_zip
+  FROM flight
+    JOIN airport ON flight.departure_airport_id = airport.airport_id
+    JOIN airport_location on airport.location_zip = airport_location.location_zip
+    JOIN airport AS arrival_airport ON flight.arrival_airport_id = arrival_airport.airport_id
+  WHERE flight_number = 'AA101'
 
 -- End of Script (July 30, 2025)
