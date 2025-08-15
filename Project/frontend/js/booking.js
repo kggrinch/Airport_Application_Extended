@@ -1,16 +1,6 @@
 $(document).ready(function() {
     // Create table row for each booking
     function createBookingRow(data) {
-        // Convert string values to numbers
-        const flight_price = parseFloat(data.flight_price);
-        const seat_price = parseFloat(data.seat_price);
-        const total_price = parseFloat(data.total_price);
-
-        // <td>${new Date(data.booking_date).toLocaleString()}</td> // used in formatting the date
-        // <td>$${flight_price.toFixed(2)}</td> // used in formatting the pricing
-        // <td>$${seat_price.toFixed(2)}</td>
-        // <td>$${total_price.toFixed(2)}</td>
-
         const row = $(`
             <tr>
                 <td>${data.ticket_id}</td>
@@ -20,8 +10,8 @@ $(document).ready(function() {
                 <td>${data.seat_number}</td>
                 <td>${data.class_type}</td>
                 <td class="text-center">
-                    <a href="view.html?user_id=${user_id}&from=booking_pricing&flight_id=${data.flight_number}" class="btn btn-outline-dark rounded-4 btn-sm text-white">View Pricing</a>
-                    <a href="view.html?user_id=${user_id}&from=booking_boarding&flight_id=${data.flight_number}" class="btn btn-outline-dark rounded-4 btn-sm text-white">View Boarding Info</a>
+                    <a href="view.html?user_id=${user_id}&from=booking_pricing&flight_id=${data.flight_number}&ticket_id=${data.ticket_id}" class="btn btn-outline-dark rounded-4 btn-sm text-white">View Pricing</a>
+                    <a href="view.html?user_id=${user_id}&from=booking_boarding&flight_id=${data.flight_number}&ticket_id=${data.ticket_id}" class="btn btn-outline-dark rounded-4 btn-sm text-white">View Boarding Info</a>
                     <button class="btn btn-outline-danger cancel-reserve-btn rounded-4 btn-sm" data-ticket="${data.ticket_id}">Cancel Flight</button>
                 </td>
             </tr>
@@ -29,9 +19,7 @@ $(document).ready(function() {
         $('#bookingTableBody').append(row);
     }
 
-    // Processes each response booking object received
     function render(data) {
-        console.log("Received data:", data); // Debugging
         $('#bookingTableBody').empty();
         
         if(data.length <= 0) {
@@ -105,7 +93,6 @@ $(document).ready(function() {
     // Initialize page
     const urlParams = new URLSearchParams(window.location.search);
     const user_id = urlParams.get('user_id');
-    console.log("URL Params user_id:", user_id); // Debug log
     
     if(user_id) {
         validate_page_selections(user_id);
