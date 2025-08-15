@@ -1,11 +1,12 @@
 $(document).ready(function() {
-    function createDetailItem(label, value) {
+    function createDetailItem(label, value) 
+    {
+        if(label === `linebreak`) return `<hr>`
         return `
             <div class="row mb-2">
                 <div class="col-4 text-white-50 fw-bold">${label}</div>
                 <div class="col-8 text-white">${value ?? 'N/A'}</div>
-            </div>
-        `;
+            </div>`;
     }
 
     function render_flight_details(data) {
@@ -18,9 +19,8 @@ $(document).ready(function() {
         }
 
         const f = data[0];
-        container.append(`<h2 class="text-white mb-4">Flight Details</h2>`);
+        container.append(`<h2 class="text-white mb-4">${f.flight_number} Flight Details</h2>`);
 
-        container.append(createDetailItem('Flight #', f.flight_number));
         container.append(createDetailItem('Airline', f.airline));
         container.append(createDetailItem('From', f.departure_airport));
         container.append(createDetailItem('To', f.arrival_airport));
@@ -32,7 +32,7 @@ $(document).ready(function() {
         container.append(createDetailItem('City', f.city));
         container.append(createDetailItem('State', f.state));
         container.append(createDetailItem('ZIP', f.location_zip));
-        container.append(createDetailItem('', '')); // breakline
+        container.append(createDetailItem('linebreak', ``));
         container.append(createDetailItem('Flight Price', `$${parseFloat(150.00).toFixed(2)}`));
     };
 
@@ -71,6 +71,7 @@ $(document).ready(function() {
         container.append(createDetailItem('Flight Price:', `$${parseFloat(p.flight_price).toFixed(2)}`));
         container.append(createDetailItem(`Seat Price`, `$${parseFloat(p.seat_price).toFixed(2)}`));
         container.append(createDetailItem('Tax:', `$${parseFloat(p.tax).toFixed(2)}`));
+        container.append(createDetailItem('linebreak', ``));
         container.append(createDetailItem('Total Price:', `$${parseFloat(p.total_price).toFixed(2)}`));
     };
 
