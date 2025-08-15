@@ -439,13 +439,20 @@ WHERE customer.first_name = 'Alice' AND customer.last_name = 'Smith';
 -- Purpose: Show all flights at an airport, including its name and code.
 -- Expected: List of flight numbers, airline names, and departure airport details.
 SELECT 
-flight.flight_number,
-flight.airline,
-airport.airport_name,
-airport.code
+    flight.flight_number,
+    flight.airline,
+    departure_airport.code AS departure_airport_code,
+    arrival_airport.code AS arrival_airport_code,
+    flight.boarding_time,
+    flight.departure_time,
+    flight.arrival_time,
+    flight.gate_number
 FROM flight
-JOIN airport ON flight.departure_airport_id = airport.airport_id
-WHERE airport.airport_name = 'John F. Kennedy International Airport';
+JOIN airport departure_airport 
+    ON flight.departure_airport_id = departure_airport.airport_id
+JOIN airport arrival_airport 
+    ON flight.arrival_airport_id = arrival_airport.airport_id
+WHERE departure_airport.airport_id = 1;
 
 -- *************************** 
 -- Query 9
