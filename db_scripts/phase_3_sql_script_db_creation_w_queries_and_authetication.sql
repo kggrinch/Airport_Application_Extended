@@ -232,7 +232,12 @@ INSERT INTO customer (first_name, last_name, email, phone, passport_number) VALU
 ('Henry', 'Miller','henry.m@example.com', '321-654-9870', 'PS246813'),
 ('Ivy', 'Davis', 'ivy.d@example.com', '987-654-3210', 'PS135792'),
 ('Jack', 'Garcia', 'jack.g@example.com', '987-654-3212', 'PS864209'),
-('Jerry', 'Jones', 'JerrJ.g@example.com', '967-694-3112', 'PS864569');
+('Jerry', 'Jones', 'JerrJ.g@example.com', '967-694-3112', 'PS864569'),
+('Liam', 'Walker', 'liam.w@example.com', '222-444-6666', 'PS777888'),
+('Mia', 'Harris', 'mia.h@example.com', '333-555-7777', 'PS888999'),
+('Noah', 'Clark', 'noah.c@example.com', '444-666-8888', 'PS999000'),
+('Olivia', 'Lewis', 'olivia.l@example.com', '555-777-9999', 'PS111222'),
+('Sophia', 'Hall', 'sophia.h@example.com', '666-888-0000', 'PS333444');
 
 -- 3. Sample Data for Customer
 -- Purpose: Store data about customer
@@ -247,7 +252,12 @@ INSERT INTO authentication (user_id, username, password) VALUES
 (8, 'hmiller', 'henry_m'),
 (9, 'idavis', 'ivy_d'),
 (10, 'jgarcia', 'jackg'),
-(11, 'jjones', 'jj123');
+(11, 'jjones', 'jj123'),
+(12, 'lwalker', 'liampass'),
+(13, 'mharris', 'miapass'),
+(14, 'nclark', 'noahpass'),
+(15, 'olewis', 'oliviapass'),
+(16, 'shall', 'sophiapass');
 
 -- 4. Sample Data for Class
 -- Purpose: Store data about seat class
@@ -262,57 +272,305 @@ INSERT INTO seat (seat_number, class_type) VALUES
 ('A1', 'First Class'),
 ('A2', 'First Class'),
 ('A3', 'First Class'),
+('A4', 'First Class'),
+('A5', 'First Class'),
 ('B1', 'Business'),
 ('B2', 'Business'),
 ('B3', 'Business'),
+('B4', 'Business'),
+('B5', 'Business'),
 ('C1', 'Economy'),
 ('C2', 'Economy'),
 ('C3', 'Economy'),
-('C4', 'Economy');
+('C4', 'Economy'),
+('C5', 'Economy'),
+('C6', 'Economy');
 
 -- 5. Sample Data for Flight
 -- Purpose: Store data flight
+-- 7. Sample Data for Flight (Each Airport has 5 Flights)
 INSERT INTO flight (flight_number, airline, departure_airport_id, arrival_airport_id, boarding_time, departure_time, arrival_time, gate_number) VALUES
+-- Airport 1 (JFK)
 ('AA101', 'American Airlines', 1, 2, '2025-08-01 07:00:00', '2025-08-01 07:30:00', '2025-08-01 10:30:00', 'A12'),
-('DL200', 'Delta Airlines', 2, 3, '2025-08-01 09:15:00', '2025-08-01 09:45:00', '2025-08-01 12:45:00', 'B05'),
-('UA303', 'United Airlines', 3, 1, '2025-08-02 14:00:00', '2025-08-02 14:30:00', '2025-08-02 17:30:00', 'C20'),
-('SW404', 'Southwest Airlines', 4, 5, '2025-08-02 18:30:00', '2025-08-02 19:00:00', '2025-08-02 21:00:00', 'D01'),
-('AA505', 'American Airlines', 5, 2, '2025-08-03 10:00:00', '2025-08-03 10:30:00', '2025-08-03 13:30:00', 'E15'),
-('DL606', 'Delta Airlines', 6, 7, '2025-08-03 12:00:00', '2025-08-03 12:30:00', '2025-08-03 15:00:00', 'F03'),
-('UA707', 'United Airlines', 7, 8, '2025-08-04 06:00:00', '2025-08-04 06:30:00', '2025-08-04 09:00:00', 'G07'),
-('SW808', 'Southwest Airlines', 8, 9, '2025-08-04 20:00:00', '2025-08-04 20:30:00', '2025-08-04 22:30:00', 'H10'),
-('AA909', 'American Airlines', 9, 10, '2025-08-05 08:45:00', '2025-08-05 09:15:00', '2025-08-05 11:45:00', 'I02'),
-('DL110', 'Delta Airlines', 10, 1, '2025-08-05 15:30:00', '2025-08-05 16:00:00', '2025-08-05 20:00:00', 'J11');
+('AA102', 'American Airlines', 1, 3, '2025-08-01 09:00:00', '2025-08-01 09:30:00', '2025-08-01 12:30:00', 'A13'),
+('AA103', 'American Airlines', 1, 4, '2025-08-01 11:00:00', '2025-08-01 11:30:00', '2025-08-01 14:30:00', 'A14'),
+('AA104', 'American Airlines', 1, 5, '2025-08-01 13:00:00', '2025-08-01 13:30:00', '2025-08-01 16:30:00', 'A15'),
+('AA105', 'American Airlines', 1, 6, '2025-08-01 15:00:00', '2025-08-01 15:30:00', '2025-08-01 18:30:00', 'A16'),
+
+-- Airport 2 (LAX)
+('DL201', 'Delta Airlines', 2, 1, '2025-08-02 07:00:00', '2025-08-02 07:30:00', '2025-08-02 10:30:00', 'B01'),
+('DL202', 'Delta Airlines', 2, 3, '2025-08-02 09:00:00', '2025-08-02 09:30:00', '2025-08-02 12:30:00', 'B02'),
+('DL203', 'Delta Airlines', 2, 4, '2025-08-02 11:00:00', '2025-08-02 11:30:00', '2025-08-02 14:30:00', 'B03'),
+('DL204', 'Delta Airlines', 2, 5, '2025-08-02 13:00:00', '2025-08-02 13:30:00', '2025-08-02 16:30:00', 'B04'),
+('DL205', 'Delta Airlines', 2, 6, '2025-08-02 15:00:00', '2025-08-02 15:30:00', '2025-08-02 18:30:00', 'B05'),
+
+-- Airport 3 (ORD)
+('UA301', 'United Airlines', 3, 1, '2025-08-03 07:00:00', '2025-08-03 07:30:00', '2025-08-03 10:30:00', 'C01'),
+('UA302', 'United Airlines', 3, 2, '2025-08-03 09:00:00', '2025-08-03 09:30:00', '2025-08-03 12:30:00', 'C02'),
+('UA303', 'United Airlines', 3, 4, '2025-08-03 11:00:00', '2025-08-03 11:30:00', '2025-08-03 14:30:00', 'C03'),
+('UA304', 'United Airlines', 3, 5, '2025-08-03 13:00:00', '2025-08-03 13:30:00', '2025-08-03 16:30:00', 'C04'),
+('UA305', 'United Airlines', 3, 6, '2025-08-03 15:00:00', '2025-08-03 15:30:00', '2025-08-03 18:30:00', 'C05'),
+
+-- Airport 4 (IAH)
+('SW401', 'Southwest Airlines', 4, 1, '2025-08-04 07:00:00', '2025-08-04 07:30:00', '2025-08-04 10:30:00', 'D01'),
+('SW402', 'Southwest Airlines', 4, 2, '2025-08-04 09:00:00', '2025-08-04 09:30:00', '2025-08-04 12:30:00', 'D02'),
+('SW403', 'Southwest Airlines', 4, 3, '2025-08-04 11:00:00', '2025-08-04 11:30:00', '2025-08-04 14:30:00', 'D03'),
+('SW404', 'Southwest Airlines', 4, 5, '2025-08-04 13:00:00', '2025-08-04 13:30:00', '2025-08-04 16:30:00', 'D04'),
+('SW405', 'Southwest Airlines', 4, 6, '2025-08-04 15:00:00', '2025-08-04 15:30:00', '2025-08-04 18:30:00', 'D05'),
+
+-- Airport 5 (ATL)
+('AA501', 'American Airlines', 5, 1, '2025-08-05 07:00:00', '2025-08-05 07:30:00', '2025-08-05 10:30:00', 'E01'),
+('AA502', 'American Airlines', 5, 2, '2025-08-05 09:00:00', '2025-08-05 09:30:00', '2025-08-05 12:30:00', 'E02'),
+('AA503', 'American Airlines', 5, 3, '2025-08-05 11:00:00', '2025-08-05 11:30:00', '2025-08-05 14:30:00', 'E03'),
+('AA504', 'American Airlines', 5, 4, '2025-08-05 13:00:00', '2025-08-05 13:30:00', '2025-08-05 16:30:00', 'E04'),
+('AA505', 'American Airlines', 5, 6, '2025-08-05 15:00:00', '2025-08-05 15:30:00', '2025-08-05 18:30:00', 'E05'),
+
+-- Airport 6 (DEN)
+('DL601', 'Delta Airlines', 6, 1, '2025-08-06 07:00:00', '2025-08-06 07:30:00', '2025-08-06 10:30:00', 'F01'),
+('DL602', 'Delta Airlines', 6, 2, '2025-08-06 09:00:00', '2025-08-06 09:30:00', '2025-08-06 12:30:00', 'F02'),
+('DL603', 'Delta Airlines', 6, 3, '2025-08-06 11:00:00', '2025-08-06 11:30:00', '2025-08-06 14:30:00', 'F03'),
+('DL604', 'Delta Airlines', 6, 4, '2025-08-06 13:00:00', '2025-08-06 13:30:00', '2025-08-06 16:30:00', 'F04'),
+('DL605', 'Delta Airlines', 6, 5, '2025-08-06 15:00:00', '2025-08-06 15:30:00', '2025-08-06 18:30:00', 'F05'),
+
+-- Airport 7 (DFW)
+('UA701', 'United Airlines', 7, 1, '2025-08-07 07:00:00', '2025-08-07 07:30:00', '2025-08-07 10:30:00', 'G01'),
+('UA702', 'United Airlines', 7, 2, '2025-08-07 09:00:00', '2025-08-07 09:30:00', '2025-08-07 12:30:00', 'G02'),
+('UA703', 'United Airlines', 7, 3, '2025-08-07 11:00:00', '2025-08-07 11:30:00', '2025-08-07 14:30:00', 'G03'),
+('UA704', 'United Airlines', 7, 4, '2025-08-07 13:00:00', '2025-08-07 13:30:00', '2025-08-07 16:30:00', 'G04'),
+('UA705', 'United Airlines', 7, 5, '2025-08-07 15:00:00', '2025-08-07 15:30:00', '2025-08-07 18:30:00', 'G05'),
+
+-- Airport 8 (SFO)
+('SW801', 'Southwest Airlines', 8, 1, '2025-08-08 07:00:00', '2025-08-08 07:30:00', '2025-08-08 10:30:00', 'H01'),
+('SW802', 'Southwest Airlines', 8, 2, '2025-08-08 09:00:00', '2025-08-08 09:30:00', '2025-08-08 12:30:00', 'H02'),
+('SW803', 'Southwest Airlines', 8, 3, '2025-08-08 11:00:00', '2025-08-08 11:30:00', '2025-08-08 14:30:00', 'H03'),
+('SW804', 'Southwest Airlines', 8, 4, '2025-08-08 13:00:00', '2025-08-08 13:30:00', '2025-08-08 16:30:00', 'H04'),
+('SW805', 'Southwest Airlines', 8, 5, '2025-08-08 15:00:00', '2025-08-08 15:30:00', '2025-08-08 18:30:00', 'H05'),
+
+-- Airport 9 (SEA)
+('AA901', 'American Airlines', 9, 1, '2025-08-09 07:00:00', '2025-08-09 07:30:00', '2025-08-09 10:30:00', 'I01'),
+('AA902', 'American Airlines', 9, 2, '2025-08-09 09:00:00', '2025-08-09 09:30:00', '2025-08-09 12:30:00', 'I02'),
+('AA903', 'American Airlines', 9, 3, '2025-08-09 11:00:00', '2025-08-09 11:30:00', '2025-08-09 14:30:00', 'I03'),
+('AA904', 'American Airlines', 9, 4, '2025-08-09 13:00:00', '2025-08-09 13:30:00', '2025-08-09 16:30:00', 'I04'),
+('AA905', 'American Airlines', 9, 5, '2025-08-09 15:00:00', '2025-08-09 15:30:00', '2025-08-09 18:30:00', 'I05'),
+
+-- Airport 10 (MIA)
+('DL1001', 'Delta Airlines', 10, 1, '2025-08-10 07:00:00', '2025-08-10 07:30:00', '2025-08-10 10:30:00', 'J01'),
+('DL1002', 'Delta Airlines', 10, 2, '2025-08-10 09:00:00', '2025-08-10 09:30:00', '2025-08-10 12:30:00', 'J02'),
+('DL1003', 'Delta Airlines', 10, 3, '2025-08-10 11:00:00', '2025-08-10 11:30:00', '2025-08-10 14:30:00', 'J03'),
+('DL1004', 'Delta Airlines', 10, 4, '2025-08-10 13:00:00', '2025-08-10 13:30:00', '2025-08-10 16:30:00', 'J04'),
+('DL1005', 'Delta Airlines', 10, 5, '2025-08-10 15:00:00', '2025-08-10 15:30:00', '2025-08-10 18:30:00', 'J05');
+
 
 -- 7. Sample Data for ticket
 -- Purpose: Store ticket data
 INSERT INTO ticket (flight_number, user_id, seat_number) VALUES
-('AA101', 1, 'A1'), 
-('DL200', 2, 'A2'), 
-('UA303', 3, 'A3'), 
-('SW404', 4, 'B1'),
-('AA505', 5, 'B2'),
-('DL606', 6, 'B3'), 
-('UA707', 7, 'C1'), 
-('SW808', 8, 'C2'),
-('AA909', 9, 'C3'),
-('AA101', 10, 'C4');
+('AA101', 1, 'A1'),
+('AA101', 2, 'C2'),
+('AA101', 3, 'B1'),
+('AA101', 4, 'C1'),
+('AA102', 2, 'A1'),
+('AA102', 3, 'C3'),
+('AA102', 4, 'C4'),
+('AA102', 5, 'A2'),
+('AA103', 3, 'C5'),
+('AA103', 4, 'C6'),
+('AA103', 5, 'A3'),
+('AA103', 6, 'B5'),
+('AA104', 4, 'C2'),
+('AA104', 5, 'C3'),
+('AA104', 6, 'C1'),
+('AA104', 7, 'A4'),
+('AA105', 5, 'C4'),
+('AA105', 6, 'C6'),
+('AA105', 7, 'B1'),
+('AA105', 8, 'A3'),
+('DL201', 6, 'C4'),
+('DL201', 7, 'A5'),
+('DL201', 8, 'A1'),
+('DL201', 9, 'C1'),
+('DL202', 7, 'B3'),
+('DL202', 8, 'A4'),
+('DL202', 9, 'C6'),
+('DL202', 10, 'C4'),
+('DL203', 8, 'C6'),
+('DL203', 9, 'A1'),
+('DL203', 10, 'C5'),
+('DL203', 11, 'C4'),
+('DL204', 9, 'C1'),
+('DL204', 10, 'B2'),
+('DL204', 11, 'A1'),
+('DL204', 12, 'B5'),
+('DL205', 10, 'C1'),
+('DL205', 11, 'A3'),
+('DL205', 12, 'A2'),
+('DL205', 13, 'C5'),
+('UA301', 11, 'A2'),
+('UA301', 12, 'B5'),
+('UA301', 13, 'C6'),
+('UA301', 14, 'A4'),
+('UA302', 12, 'B4'),
+('UA302', 13, 'A3'),
+('UA302', 14, 'C2'),
+('UA302', 15, 'A1'),
+('UA303', 13, 'B4'),
+('UA303', 14, 'A2'),
+('UA303', 15, 'B2'),
+('UA303', 16, 'C3'),
+('UA304', 14, 'B1'),
+('UA304', 15, 'B3'),
+('UA304', 16, 'A2'),
+('UA304', 1, 'C5'),
+('UA305', 15, 'B3'),
+('UA305', 16, 'B4'),
+('UA305', 1, 'C1'),
+('UA305', 2, 'C3'),
+('SW401', 16, 'B3'),
+('SW401', 1, 'C4'),
+('SW401', 2, 'A1'),
+('SW401', 3, 'C2'),
+('SW402', 1, 'A5'),
+('SW402', 2, 'B5'),
+('SW402', 3, 'C1'),
+('SW402', 4, 'B4'),
+('SW403', 2, 'B5'),
+('SW403', 3, 'C2'),
+('SW403', 4, 'B4'),
+('SW403', 5, 'C6'),
+('SW404', 3, 'C1'),
+('SW404', 4, 'C3'),
+('SW404', 5, 'A2'),
+('SW404', 6, 'C2'),
+('SW405', 4, 'A5'),
+('SW405', 5, 'A2'),
+('SW405', 6, 'B3'),
+('SW405', 7, 'C5'),
+('AA501', 5, 'C2'),
+('AA501', 6, 'B5'),
+('AA501', 7, 'B1'),
+('AA501', 8, 'C6'),
+('AA502', 6, 'B5'),
+('AA502', 7, 'C4'),
+('AA502', 8, 'B1'),
+('AA502', 9, 'B2'),
+('AA503', 7, 'C1'),
+('AA503', 8, 'A3'),
+('AA503', 9, 'B5'),
+('AA503', 10, 'A4'),
+('AA504', 8, 'B5'),
+('AA504', 9, 'C4'),
+('AA504', 10, 'C3'),
+('AA504', 11, 'A4'),
+('AA505', 9, 'B1'),
+('AA505', 10, 'B4'),
+('AA505', 11, 'A2'),
+('AA505', 12, 'C4'),
+('DL601', 10, 'C5'),
+('DL601', 11, 'B4'),
+('DL601', 12, 'C3'),
+('DL601', 13, 'A5'),
+('DL602', 11, 'C5'),
+('DL602', 12, 'B5'),
+('DL602', 13, 'B4'),
+('DL602', 14, 'A4'),
+('DL603', 12, 'C6'),
+('DL603', 13, 'A5'),
+('DL603', 14, 'C2'),
+('DL603', 15, 'A3'),
+('DL604', 13, 'A4'),
+('DL604', 14, 'A3'),
+('DL604', 15, 'A1'),
+('DL604', 16, 'B2'),
+('DL605', 14, 'C2'),
+('DL605', 15, 'A1'),
+('DL605', 16, 'C3'),
+('DL605', 1, 'B1'),
+('UA701', 15, 'A4'),
+('UA701', 16, 'B4'),
+('UA701', 1, 'C6'),
+('UA701', 2, 'A1'),
+('UA702', 16, 'A5'),
+('UA702', 1, 'B1'),
+('UA702', 2, 'B5'),
+('UA702', 3, 'C1'),
+('UA703', 1, 'C5'),
+('UA703', 2, 'C6'),
+('UA703', 3, 'C1'),
+('UA703', 4, 'B2'),
+('UA704', 2, 'B2'),
+('UA704', 3, 'C2'),
+('UA704', 4, 'A4'),
+('UA704', 5, 'A3'),
+('UA705', 3, 'B3'),
+('UA705', 4, 'B2'),
+('UA705', 5, 'C4'),
+('UA705', 6, 'A1'),
+('SW801', 4, 'B1'),
+('SW801', 5, 'B4'),
+('SW801', 6, 'C6'),
+('SW801', 7, 'C2'),
+('SW802', 5, 'A1'),
+('SW802', 6, 'B3'),
+('SW802', 7, 'C5'),
+('SW802', 8, 'C6'),
+('SW803', 6, 'B5'),
+('SW803', 7, 'A4'),
+('SW803', 8, 'B3'),
+('SW803', 9, 'C1'),
+('SW804', 7, 'B1'),
+('SW804', 8, 'C6'),
+('SW804', 9, 'C4'),
+('SW804', 10, 'A5'),
+('SW805', 8, 'B5'),
+('SW805', 9, 'C5'),
+('SW805', 10, 'C4'),
+('SW805', 11, 'A5'),
+('AA901', 9, 'A5'),
+('AA901', 10, 'A2'),
+('AA901', 11, 'C4'),
+('AA901', 12, 'B4'),
+('AA902', 10, 'A4'),
+('AA902', 11, 'A1'),
+('AA902', 12, 'C5'),
+('AA902', 13, 'C1'),
+('AA903', 11, 'A3'),
+('AA903', 12, 'C4'),
+('AA903', 13, 'B4'),
+('AA903', 14, 'C6'),
+('AA904', 12, 'C6'),
+('AA904', 13, 'A2'),
+('AA904', 14, 'A5'),
+('AA904', 15, 'A4'),
+('AA905', 13, 'C1'),
+('AA905', 14, 'B1'),
+('AA905', 15, 'C2'),
+('AA905', 16, 'B5'),
+('DL1001', 14, 'A3'),
+('DL1001', 15, 'C6'),
+('DL1001', 16, 'B1'),
+('DL1001', 1, 'A1'),
+('DL1002', 15, 'A3'),
+('DL1002', 16, 'A2'),
+('DL1002', 1, 'B1'),
+('DL1002', 2, 'B5'),
+('DL1003', 16, 'C5'),
+('DL1003', 1, 'C2'),
+('DL1003', 2, 'A4'),
+('DL1003', 3, 'A5'),
+('DL1004', 1, 'A5'),
+('DL1004', 2, 'C6'),
+('DL1004', 3, 'B3'),
+('DL1004', 4, 'A2'),
+('DL1005', 2, 'B1'),
+('DL1005', 3, 'A2'),
+('DL1005', 4, 'A3'),
+('DL1005', 5, 'C4');
 
 -- 8. Sample Data for booking
 -- Purpose: Store booking data
 -- booking_date and flight_price have default values 
 -- seat_cost, tax, and total_price are dynamically calculated using the calculate_booking_cost trigger before insertion using the ticket_id value to retreive the seat pricing. 
-INSERT INTO booking (ticket_id) VALUES
-(1),
-(2),
-(3),
-(4),
-(5),
-(6),
-(7),
-(8),
-(9),
-(10);
+INSERT INTO booking (ticket_id)
+SELECT ticket_id FROM ticket;
 
 -- ************************************ --
 --               Part C                 --
@@ -439,13 +697,20 @@ WHERE customer.first_name = 'Alice' AND customer.last_name = 'Smith';
 -- Purpose: Show all flights at an airport, including its name and code.
 -- Expected: List of flight numbers, airline names, and departure airport details.
 SELECT 
-flight.flight_number,
-flight.airline,
-airport.airport_name,
-airport.code
+    flight.flight_number,
+    flight.airline,
+    departure_airport.code AS departure_airport_code,
+    arrival_airport.code AS arrival_airport_code,
+    flight.boarding_time,
+    flight.departure_time,
+    flight.arrival_time,
+    flight.gate_number
 FROM flight
-JOIN airport ON flight.departure_airport_id = airport.airport_id
-WHERE airport.airport_name = 'John F. Kennedy International Airport';
+JOIN airport departure_airport 
+    ON flight.departure_airport_id = departure_airport.airport_id
+JOIN airport arrival_airport 
+    ON flight.arrival_airport_id = arrival_airport.airport_id
+WHERE departure_airport.airport_id = 1;
 
 -- *************************** 
 -- Query 9
@@ -468,16 +733,25 @@ ORDER BY seat.seat_number;
 
 -- *************************** 
 -- Query 10
--- Purpose: Get flight, airline, gate number, and boarding time with proper frontend formatting
--- Expected: List of flights with their boarding details.
-SELECT 
-    flight.flight_number AS flight,
-    flight.airline AS airline,
-    airport.airport_name AS airport,
-    flight.gate_number AS gate,
-    flight.boarding_time AS boarding
-FROM flight
-JOIN airport 
-    ON flight.departure_airport_id = airport.airport_id;
+-- Purpose: Get all flight details of a given flight including the airport and airport location of the flight
+-- Expected: List of flights with their flight information, boarding details, and airport with location details.
+SELECT
+    flight.flight_number, 
+    flight.airline,
+    airport.code AS departure_airport, 
+    arrival_airport.code AS arrival_airport, 
+    flight.boarding_time,
+    flight.departure_time,
+    flight.arrival_time,
+    flight.gate_number,
+    airport.airport_name, 
+    airport_location.city, 
+    airport_location.state, 
+    airport_location.location_zip
+  FROM flight
+    JOIN airport ON flight.departure_airport_id = airport.airport_id
+    JOIN airport_location on airport.location_zip = airport_location.location_zip
+    JOIN airport AS arrival_airport ON flight.arrival_airport_id = arrival_airport.airport_id
+  WHERE flight_number = 'AA101'
 
 -- End of Script (July 30, 2025)

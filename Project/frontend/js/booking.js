@@ -5,8 +5,8 @@ $(document).ready(function() {
             <tr>
                 <td>${data.ticket_id}</td>
                 <td>${data.flight_number}</td>
-                <td>${data.departure_airport_code}</td>
-                <td>${data.arrival_airport_code}</td>
+                <td>${data.departure_airport}</td>
+                <td>${data.arrival_airport}</td>
                 <td>${data.seat_number}</td>
                 <td>${data.class_type}</td>
                 <td class="text-center">
