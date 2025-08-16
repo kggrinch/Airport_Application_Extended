@@ -6,7 +6,7 @@ $(document).ready(function() {
         // clears all tables. See if there is a more one line way to clear the table.
         $('table tbody').empty();
 
-        for(let i = 0; i < 3; i++)
+        for(let i = 0; i < 5; i++)
         {
             const seat = allSeats[i];
             const isAvailable = availableSeats.includes(seat);
@@ -21,7 +21,7 @@ $(document).ready(function() {
             if(!isAvailable) row.find(`button.reserve-btn`).prop(`disabled`, true).text(`Unavailable`).removeClass(`btn-primary`).addClass(`btn-outline-primary btn-sm`);
             $(`#firstClassBody`).append(row);
         }
-        for(let i = 3; i < 6; i++)
+        for(let i = 5; i < 10; i++)
         {
             const seat = allSeats[i];
             const isAvailable = availableSeats.includes(seat);
@@ -36,7 +36,7 @@ $(document).ready(function() {
             if(!isAvailable) row.find(`button.reserve-btn`).prop(`disabled`, true).text(`Unavailable`).removeClass(`btn-primary`).addClass(`btn-outline-primary btn-sm`);
             $(`#businessClassBody`).append(row);
         }
-        for(let i = 6; i < 10; i++)
+        for(let i = 10; i < 16; i++)
         {
             const seat = allSeats[i];
             const isAvailable = availableSeats.includes(seat);
@@ -130,7 +130,7 @@ $(document).ready(function() {
     const urlParams = new URLSearchParams(window.location.search);
     const user_id = urlParams.get('user_id');
     const flight_id = urlParams.get('flight_id');
-    const allSeats = ["A1", "A2", "A3", "B1", "B2", "B3","C1", "C2", "C3", "C4"];
+    const allSeats = ["A1", "A2", "A3", "A4", "A5", "B1","B2", "B3", "B4", "B5", "C1", "C2", "C3", "C4", "C5", "C6"];
     if(flight_id && user_id)
     {
         validate_page_selections(user_id);
