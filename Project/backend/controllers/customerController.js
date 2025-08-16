@@ -111,8 +111,6 @@ exports.createTicket = (req, res) =>
   const flight = req.body.flight_id;
   const user = req.body.user_id;
   const seat = req.body.seat_number;
-  console.log(`flight: ${flight}, user: ${user}, seat: ${seat}`);
-  
   connection.query(`
     INSERT INTO ticket(flight_number, user_id, seat_number) VALUES(?, ?, ?)`,
     [flight, user, seat],

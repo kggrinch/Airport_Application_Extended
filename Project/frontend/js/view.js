@@ -121,7 +121,6 @@ $(document).ready(function() {
     const ticket_id = urlParams.get(`ticket_id`);
     const from = urlParams.get(`from`);
 
-    // maybe try refactoring to retrieve all details given the ticket_id
     switch(from)
     {
         case `view`:
@@ -140,7 +139,6 @@ $(document).ready(function() {
     // Set return button link
     $('#returnButton').click(function() 
     {
-        // add logic to return to the correct front-end based from the from parameter
         if (user_id && from === `view`) 
         {
             window.location.href = `customer.html?user_id=${user_id}`;
