@@ -3,7 +3,6 @@ $(document).ready(function() {
     // Processes each response flight object received
     function render(allSeats, availableSeats)
     {
-        // clears all tables. See if there is a more one line way to clear the table.
         $('table tbody').empty();
 
         for(let i = 0; i < 5; i++)
