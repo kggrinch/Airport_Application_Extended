@@ -678,19 +678,22 @@ ORDER BY seat.seat_number;
 
 -- *************************** 
 -- Query 7
--- Purpose: Show all bookings made by 'Alice Smith' (name requirement can change)
+-- Purpose: Show all bookings made by user
 -- Expected: Booking ID, total price, and booking date.
 SELECT 
-customer.first_name,
-customer.last_name,
-booking.ticket_id,
-booking.booking_id,
-booking.total_price,
-booking.booking_date
-FROM booking
-JOIN ticket ON booking.ticket_id = ticket.ticket_id
-JOIN customer ON ticket.user_id = customer.user_id
-WHERE customer.first_name = 'Alice' AND customer.last_name = 'Smith';
+    ticket.ticket_id, 
+    ticket.flight_number, 
+    departure_airport.code AS departure_airport, 
+    arrival_airport.code AS arrival_airport, 
+    seat.seat_number, 
+    class.class_type
+  FROM ticket
+    JOIN seat ON ticket.seat_number = seat.seat_number
+    JOIN class ON seat.class_type = class.class_type
+    JOIN flight ON ticket.flight_number = flight.flight_number
+    JOIN airport AS departure_airport ON flight.departure_airport_id = departure_airport.airport_id
+    JOIN airport AS arrival_airport ON flight.arrival_airport_id = arrival_airport.airport_id
+  WHERE user_id = 1;
 
 -- *************************** 
 -- Query 8

@@ -162,8 +162,8 @@ exports.deleteTicket = (req, res) =>
 
 // Retrieve all booking information given user id
 // Query 7 of part C phase 2 (3/4 queries from part c phase 2)
-// Purpose: List available seat numbers for given flight
-// Expected: Seat numbers marked as available for the specific flight.
+// Purpose: Show all bookings made by user
+// Expected: Booking ID, total price, and booking date.
 exports.getBookingsByUser = (req, res) => {
   const user_id = req.params.id; 
   connection.query(`SELECT 
