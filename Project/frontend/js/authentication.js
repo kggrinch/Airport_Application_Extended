@@ -95,7 +95,7 @@ $(document).ready(function()
     // upon submission request a post from backend while validating user data
     $("#fastLoginForm").submit(function(event) 
     {
-        event.preventDefault(); // stop default submit behavior
+        event.preventDefault();
 
         const user_id = $(`#select_user_form`).val();
         console.log(user_id);
