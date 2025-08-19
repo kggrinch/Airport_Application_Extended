@@ -693,7 +693,8 @@ SELECT
     JOIN flight ON ticket.flight_number = flight.flight_number
     JOIN airport AS departure_airport ON flight.departure_airport_id = departure_airport.airport_id
     JOIN airport AS arrival_airport ON flight.arrival_airport_id = arrival_airport.airport_id
-  WHERE user_id = 1;
+  WHERE user_id = 1
+  ORDER BY ticket.ticket_id;
 
 -- *************************** 
 -- Query 8
