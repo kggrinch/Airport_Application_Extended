@@ -1,4 +1,6 @@
 $(document).ready(function() {
+
+    // Create a row for a flight or ticket detail
     function createDetailItem(label, value) 
     {
         if(label === `linebreak`) return `<hr>`
@@ -9,6 +11,7 @@ $(document).ready(function() {
             </div>`;
     }
 
+    // Show flight information on the page
     function render_flight_details(data) {
         const container = $('#flight-details-container');
         container.empty();
@@ -36,6 +39,7 @@ $(document).ready(function() {
         container.append(createDetailItem('Flight Price', `$${parseFloat(150.00).toFixed(2)}`));
     };
 
+    // Show boarding information on the page
     function render_boarding_details(data) {
         const container = $('#flight-details-container');
         container.empty();
@@ -54,6 +58,7 @@ $(document).ready(function() {
         container.append(createDetailItem('Arrival Time', new Date(b.arrival_time).toLocaleString()));
     };
 
+    // Show ticket price details on the page
     function render_pricing_details(data)
     {
         const container = $('#flight-details-container');
@@ -75,7 +80,7 @@ $(document).ready(function() {
         container.append(createDetailItem('Total Price:', `$${parseFloat(p.total_price).toFixed(2)}`));
     };
 
-
+    // Get flight information from the server
     function fetchFlightDetails(flight_id) {
         $.ajax({
             url: `http://localhost:3000/customer/flights/${flight_id}`,
@@ -88,6 +93,7 @@ $(document).ready(function() {
         });
     };
 
+    // Get ticket price information from the server
     function fetchTicketPricing(ticket_id)
     {
        $.ajax
@@ -102,6 +108,7 @@ $(document).ready(function() {
        });
     }
 
+    // Get boarding information from the server
     function fetchBoardingInfo(flight_id)
     {
         $.ajax({
@@ -115,12 +122,14 @@ $(document).ready(function() {
         });
     }
 
+    // Get parameters from the URL
     const urlParams = new URLSearchParams(window.location.search);
     const user_id = urlParams.get(`user_id`);
     const flight_id = urlParams.get(`flight_id`);
     const ticket_id = urlParams.get(`ticket_id`);
     const from = urlParams.get(`from`);
 
+    // Decide what information to show based on the page source
     switch(from)
     {
         case `view`:
