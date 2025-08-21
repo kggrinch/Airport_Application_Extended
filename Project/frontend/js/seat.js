@@ -120,7 +120,7 @@ $(document).ready(function() {
             success: function(res)
             {
                 const new_ticket_id = {ticket_id: `${res.ticket_id}`}
-                create_booking(new_ticket_id); // confirm reservation
+                create_booking(new_ticket_id); // create booking for newly created ticket
             },
             error: function(xhr, status, error)
             {
