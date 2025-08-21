@@ -19,7 +19,6 @@ $(document).ready(function() {
         $('#flightsTableBody').append(row);
     }
 
-    // Processes each response flight object received
     function render(data) {
         $('#flightsTableBody').empty();
         if(data.length <= 0) {

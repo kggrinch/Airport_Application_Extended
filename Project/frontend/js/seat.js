@@ -1,6 +1,5 @@
 $(document).ready(function() {
-
-    // Processes each response flight object received
+    
     function render(allSeats, availableSeats)
     {
         $('table tbody').empty();
