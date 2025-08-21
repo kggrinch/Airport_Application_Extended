@@ -10,6 +10,7 @@
   </head>
   <body>
     <div class="container">
+      <!-- Page Header with Logo -->
       <header class="text-light py-3 mb-4">
         <div class="d-flex justify-content-center align-items-center">
           <h1 class="m-0 me-3">SkyHub</h1>
@@ -17,20 +18,25 @@
         </div>
       </header>
       
+      <!-- Navigation Bar -->
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
         <div class="container-fluid">
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
+          <!-- Navbar links -->
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
+              <!-- Current page link -->
               <li class="nav-item">
                 <a class="nav-link active" href="customer.html">View Flights</a>
               </li>
+              <!-- Link to booking page -->
               <li class="nav-item">
                 <a class="nav-link" href="booking.html">Booking Details</a>
               </li>
             </ul>
+            <!-- Logout button -->
             <div class="ms-auto">
               <a href="authentication.html" class="btn btn-secondary rounded-4">Logout</a>
             </div>
@@ -38,6 +44,7 @@
         </div>
       </nav>
 
+      <!-- Airport filter --> 
       <div class="container mb-3">
         <div class="row align-items-center">
           <div class="col">
@@ -52,6 +59,7 @@
         </div>
       </div>
 
+      <!-- Flights Table -->
       <div class="container mt-4 mb-4" id="data-container">
         <div class="table-responsive">
           <table class="table table-hover">
@@ -65,7 +73,6 @@
               </tr>
             </thead>
             <tbody id="flightsTableBody">
-              <!-- Flight data will be inserted here -->
             </tbody>
           </table>
         </div>
