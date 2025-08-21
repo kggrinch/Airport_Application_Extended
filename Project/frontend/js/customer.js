@@ -110,7 +110,7 @@ $(document).ready(function() {
 
     function getAllFlights() {
         $.ajax({
-            url: "http://localhost:3000/customer/flights", // Changed to match your route
+            url: "http://localhost:3000/customer/flights",
             method: "GET",
             dataType: "json",
             success: render,
@@ -125,13 +125,13 @@ $(document).ready(function() {
         });
     }
 
-    // Initialize page - updated to load all flights first
+    // Initialize page
     const urlParams = new URLSearchParams(window.location.search);
     const user_id = urlParams.get('user_id');
     if(user_id) {
         validate_page_selections(user_id);
         loadAirports();
-        getAllFlights(); // Load all flights immediately
+        getAllFlights();
     } else {
         alert(`No User Selected`);
     }
