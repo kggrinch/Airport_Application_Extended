@@ -10,24 +10,30 @@
   <body>
     <div class="container">
       
+      <!-- Page Header -->
       <header class="text-light py-3 mb-4">
         <h1 class="text-center">Booking Details</h1>
       </header>
       
+      <!-- Navigation Bar -->
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
         <div class="container-fluid">
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
+          <!-- Navbar links -->
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
+              <!-- Link to view flights -->
               <li class="nav-item">
                 <a class="nav-link" href="customer.html">View Flights</a>
               </li>
+              <!-- Current page link -->
               <li class="nav-item">
                 <a class="nav-link active" href="booking.html">Booking Details</a>
               </li>
             </ul>
+            <!-- Logout button -->
             <div class="ms-auto">
               <a href="authentication.html" class="btn btn-secondary rounded-4">Logout</a>
             </div>
@@ -35,8 +41,10 @@
         </div>
       </nav>
 
+      <!-- Booking Table Container -->
       <div class="container mt-4 mb-4" id="data-container">
         <div class="table-responsive">
+          <!-- Table displaying booking details -->
           <table class="table table-hover">
             <thead>
               <tr>
@@ -46,15 +54,16 @@
                 <th>To</th>
                 <th>Seat Number</th>
                 <th>Class Type</th>
+                <!-- Action buttons column -->
                 <th colspan="2" class="text-center">Action</th>
               </tr>
             </thead>
             <tbody id="bookingTableBody">
-              <!-- Booking data will be inserted here -->
             </tbody>
           </table>
         </div>
       </div>
+
       
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>

@@ -1,9 +1,12 @@
 $(document).ready(function() {
     
+    // Display seats in the table
     function render(allSeats, availableSeats)
     {
+        // clear old rows
         $('table tbody').empty();
 
+        // first class seats
         for(let i = 0; i < 5; i++)
         {
             const seat = allSeats[i];
@@ -16,9 +19,11 @@ $(document).ready(function() {
                     <button class="btn btn-primary reserve-btn rounded-4" data-seat="${seat}">Reserve</button>
                 </td>
                 </tr>`)
+            // disable button if seat is taken
             if(!isAvailable) row.find(`button.reserve-btn`).prop(`disabled`, true).text(`Unavailable`).removeClass(`btn-primary`).addClass(`btn-outline-primary btn-sm`);
             $(`#firstClassBody`).append(row);
         }
+        // business class seats
         for(let i = 5; i < 10; i++)
         {
             const seat = allSeats[i];
@@ -31,9 +36,11 @@ $(document).ready(function() {
                     <button class="btn btn-primary reserve-btn rounded-4" data-seat="${seat}">Reserve</button>
                 </td>
                 </tr>`)
+            // disable button if seat is taken
             if(!isAvailable) row.find(`button.reserve-btn`).prop(`disabled`, true).text(`Unavailable`).removeClass(`btn-primary`).addClass(`btn-outline-primary btn-sm`);
             $(`#businessClassBody`).append(row);
         }
+        // economy class seats
         for(let i = 10; i < 16; i++)
         {
             const seat = allSeats[i];
@@ -46,12 +53,13 @@ $(document).ready(function() {
                     <button class="btn btn-primary reserve-btn rounded-4" data-seat="${seat}">Reserve</button>
                 </td>
                 </tr>`)
+            // disable button if seat is taken
             if(!isAvailable) row.find(`button.reserve-btn`).prop(`disabled`, true).text(`Unavailable`).removeClass(`btn-primary`).addClass(`btn-outline-primary btn-sm`);
             $(`#economyClassBody`).append(row);
         }
     };
 
-
+    // get seat info from server
     function loadSeats() {
         $.ajax({
             url: `http://localhost:3000/customer/flight/${flight_id}/seats`,
@@ -79,6 +87,7 @@ $(document).ready(function() {
         $('.btn-return').attr('href', href);
     }
 
+    // send booking to server
     function create_booking(new_ticket_id)
     {
         $.ajax
@@ -99,6 +108,7 @@ $(document).ready(function() {
         });
     }
 
+    // reserve a seat
     function reserve_ticket(reservation)
     {
         $.ajax
@@ -110,7 +120,7 @@ $(document).ready(function() {
             success: function(res)
             {
                 const new_ticket_id = {ticket_id: `${res.ticket_id}`}
-                create_booking(new_ticket_id);
+                create_booking(new_ticket_id); // confirm reservation
             },
             error: function(xhr, status, error)
             {
@@ -119,6 +129,7 @@ $(document).ready(function() {
         });
     };
 
+    // change page title to show flight
     function update_title(flight_id)
     {
         $(`h1`).text(`${flight_id} Seat Selection`);
@@ -131,9 +142,9 @@ $(document).ready(function() {
     const allSeats = ["A1", "A2", "A3", "A4", "A5", "B1","B2", "B3", "B4", "B5", "C1", "C2", "C3", "C4", "C5", "C6"];
     if(flight_id && user_id)
     {
-        validate_page_selections(user_id);
-        update_title(flight_id);
-        loadSeats();
+        validate_page_selections(user_id); // set return button
+        update_title(flight_id); // show flight number
+        loadSeats(); // get and show seats
     }
     else
     {
@@ -152,6 +163,6 @@ $(document).ready(function() {
             user_id: user_id,
             seat_number: seat_number
         };
-        reserve_ticket(reservation);
+        reserve_ticket(reservation); // send reservation to server
     });
 });

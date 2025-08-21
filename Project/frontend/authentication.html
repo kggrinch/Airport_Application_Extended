@@ -10,6 +10,7 @@
   <body>
     <div class="container">
       
+      <!-- Header section with site title, logo, authors, and About page link -->
       <header class="text-light py-3 mb-4 text-center">
         <div class="d-flex justify-content-center align-items-center">
           <h1 class="m-0 me-3">SkyHub</h1>
@@ -33,13 +34,13 @@
               <div class="col d-flex justify-content-end">    
                 <select class="form-select w-auto me-3" id="select_user_form" required>
                   <option selected value="">Select User</option>
-                  <!-- Fill user options here -->
                 </select>
                 <button type="submit" class="btn btn-primary rounded-pill">Select User Login</button>
               </div>
             </form>
         </div>
 
+        <!-- Standard login form -->
         <form id="loginForm">
             <div class="mb-3">
               <label for="usernameInput" class="form-label">Username:</label>
@@ -55,10 +56,6 @@
                 <button type="submit" name="action" value="login" class="btn btn-primary rounded-pill">Login</button>
             </div>
         </form>
-        <!-- Sign up feature will be implemented in the future -->
-        <!-- <div class="text-center mt-2">
-            <button type="submit" name="action" value="signup" class="btn btn-secondary rounded-pill">Signup</button>
-        </div> -->
       </main>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>

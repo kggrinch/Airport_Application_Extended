@@ -1,7 +1,9 @@
 $(document).ready(function() {
     // Create table row for each flight
     function createTableRow(data) {
+        // Get user_id from URL query parameters
         const user_id = new URLSearchParams(window.location.search).get('user_id');
+        // Build a table row with flight data and action buttons
         const row = $(`
             <tr>
                 <td>${data.flight_number}</td>
@@ -16,18 +18,23 @@ $(document).ready(function() {
                 </td>
             </tr>
         `);
+        // Add the row to the flight table
         $('#flightsTableBody').append(row);
     }
 
+    // Show all flights in the table
     function render(data) {
+        // Remove old flights from the table
         $('#flightsTableBody').empty();
-        if(data.length <= 0) {
+        // If there are no flights, show a message
+        if(data.length <= 0) {            
             $('#flightsTableBody').append(`
                 <tr>
                     <td colspan="5" class="text-center text-danger-emphasis">No Flights Found</td>
                 </tr>
             `);
         }
+        // Make a row for each flight
         data.forEach(function(flight) {
             createTableRow(flight);
         });
@@ -39,9 +46,11 @@ $(document).ready(function() {
             url: `http://localhost:3000/customer/airports/${airportId}/flights`,
             method: "GET",
             dataType: "json",
+            // Show flights if success
             success: render,
             error: (xhr, status, error) => {
                 console.log(xhr.responseText);
+                // Show error message in table
                 $('#flightsTableBody').html(`
                     <tr>
                         <td colspan="5" class="text-center text-danger-emphasis">Error loading flights</td>
@@ -51,6 +60,7 @@ $(document).ready(function() {
         });
     }
 
+    // Get all airports for the dropdown
    function loadAirports() {
         $.ajax({
             url: "http://localhost:3000/customer/airports",
@@ -58,9 +68,11 @@ $(document).ready(function() {
             success: function(airports) {
                 const select = $('#airportSelect');
                 select.empty();
-                select.append('<option value="" selected>All Airports</option>'); // Changed this line
+                // Add default option
+                select.append('<option value="" selected>All Airports</option>');
                 
                 if (airports && airports.length > 0) {
+                    // Add each airport as a choice
                     airports.forEach(airport => {
                         select.append(`<option value="${airport.airport_id}">${airport.airport_name} (${airport.code})</option>`);
                     });
@@ -76,15 +88,17 @@ $(document).ready(function() {
         });
     }
 
-    // Function to let customer schedule a flight
+    // Let customer schedule a flight
     function schedule_flight(flight_to_schedule) {
         $.ajax({
             url: `http://localhost:3000/customer/${flight_to_schedule}`,
             method: "PATCH",
             contentType: 'application/json',
+            // Tell server to schedule the flight
             data: JSON.stringify({scheduled: true}),
             success: function(response) {
                 alert(`Flight: ${flight_to_schedule} scheduled successfully`);
+                // Get flights again
                 fetchData();
             },
             error: function(xhr, status, error) {
@@ -93,6 +107,7 @@ $(document).ready(function() {
         });
     }
 
+    // Change navbar links to include user_id
     function validate_page_selections(user_id) {
         if (!user_id) return;
 
@@ -100,18 +115,22 @@ $(document).ready(function() {
             const href = $(this).attr(`href`);
             if(!href) return;
 
+            // Add user_id to link
             const url = new URL(href, window.location.href);
             url.searchParams.set(`user_id`, user_id);
 
+            // Update the link 
             $(this).attr('href', url.toString());
         });
     }
 
+    // Get all flights without filtering
     function getAllFlights() {
         $.ajax({
             url: "http://localhost:3000/customer/flights",
             method: "GET",
             dataType: "json",
+            // Show flights if success
             success: render,
             error: (xhr, status, error) => {
                 console.log(xhr.responseText);
@@ -128,9 +147,12 @@ $(document).ready(function() {
     const urlParams = new URLSearchParams(window.location.search);
     const user_id = urlParams.get('user_id');
     if(user_id) {
-        validate_page_selections(user_id);
-        loadAirports();
-        getAllFlights();
+        // Make links include user_id
+        validate_page_selections(user_id); 
+        // Show airports in dropdown
+        loadAirports(); 
+        // Show all flights
+        getAllFlights(); 
     } else {
         alert(`No User Selected`);
     }
@@ -139,8 +161,10 @@ $(document).ready(function() {
     $('#airportSelect').change(function() {
         const airportId = $(this).val();
         if (airportId) {
+            // Show flights for this airport
             fetchFlightsByAirport(airportId);
         } else {
+            // Show all flights
             getAllFlights();
         }
     });
