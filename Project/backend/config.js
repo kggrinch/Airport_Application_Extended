@@ -17,7 +17,7 @@ connection.connect((err) =>
   // unsuccess
   if(err) 
   {
-    console.error(`Error: there was an error connection to airport_system_db:`, err.stack);
+    console.error(`Error: there was an error connecting to airport_system_db:`, err.stack);
     throw err;
   }
   // success
