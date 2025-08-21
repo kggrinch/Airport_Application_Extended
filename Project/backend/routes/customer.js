@@ -11,8 +11,8 @@ router.get('/flights/:id', controller.getFlightDetails); // get flight details b
 router.get('/flight/:id/boarding', controller.getBoardingDetails); // get boarding info of a specific flight
 router.get('/flight/ticket/:id/pricing', controller.getPricingDetails); // get pricing info of a specific ticket
 
-router.post('/flight/ticket', controller.createTicket);            // router.post('/:customer_id/flights/:flight_id/seats/:seat_id', controller.createTicket);
-router.post('/flight/ticket/booking', controller.createBooking);   // router.post('/:customer_id/flights/:flight_id/seats/:seat_id/booking', controller.createBooking);
+router.post('/flight/ticket', controller.createTicket); // create new ticket
+router.post('/flight/ticket/booking', controller.createBooking); // create new booking
 
 router.delete('/flight/ticket', controller.deleteTicket); // delete ticket deletes the booking which cascades to the ticket.
 

@@ -42,5 +42,3 @@ exports.getCustomerLogin = (req, res) =>
     }
   );
 }
-
-// Create signup call

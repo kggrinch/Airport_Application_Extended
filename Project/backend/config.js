@@ -1,11 +1,8 @@
-// initialize mysql2
 const mysql = require(`mysql2`);
 const dotenv = require(`dotenv`);
 dotenv.config();
 
-
-// local host
-// initialize connection to airport_system_db
+// create connection to airport_system_db
 const connection = mysql.createConnection
 ({
   host: process.env.MYSQL_HOST,

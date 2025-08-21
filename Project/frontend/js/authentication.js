@@ -20,7 +20,8 @@ $(document).ready(function()
         alertDiv.append($("<p>").addClass("mb-0").text(message));
 
         // Add details if provided
-        if (details) {
+        if (details)
+        {
             alertDiv.append($("<p>").addClass("mb-0 mt-2 small").text(details));
         }
 

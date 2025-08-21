@@ -6,9 +6,9 @@ const authenticationRoutes = require('./routes/authentication');
 const app = express();
 
 // Connect middleware
-app.use(cors()); // set cross browser communication
-app.use(express.json()); // set communication via json
-app.use((err, req, res, next) => // set error handling
+app.use(cors());
+app.use(express.json()); 
+app.use((err, req, res, next) => 
 {
   console.log(err.stack);
   res.status(500).send(`Error!`);
