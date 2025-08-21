@@ -88,25 +88,6 @@ $(document).ready(function() {
         });
     }
 
-    // Let customer schedule a flight
-    function schedule_flight(flight_to_schedule) {
-        $.ajax({
-            url: `http://localhost:3000/customer/${flight_to_schedule}`,
-            method: "PATCH",
-            contentType: 'application/json',
-            // Tell server to schedule the flight
-            data: JSON.stringify({scheduled: true}),
-            success: function(response) {
-                alert(`Flight: ${flight_to_schedule} scheduled successfully`);
-                // Get flights again
-                fetchData();
-            },
-            error: function(xhr, status, error) {
-                alert(`Scheduling Failed\n ${xhr.status}\n${status}\n${error}`);
-            },
-        });
-    }
-
     // Change navbar links to include user_id
     function validate_page_selections(user_id) {
         if (!user_id) return;
@@ -130,7 +111,6 @@ $(document).ready(function() {
             url: "http://localhost:3000/customer/flights",
             method: "GET",
             dataType: "json",
-            // Show flights if success
             success: render,
             error: (xhr, status, error) => {
                 console.log(xhr.responseText);
@@ -167,11 +147,5 @@ $(document).ready(function() {
             // Show all flights
             getAllFlights();
         }
-    });
-
-    // update schedule button on card handler
-    $(document).on(`click`,`.schedule-btn`, function(event) {
-        flight_to_schedule = event.target.dataset.flightId;
-        schedule_flight(flight_to_schedule);
     });
 });

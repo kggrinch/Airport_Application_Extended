@@ -35,8 +35,7 @@ $(document).ready(function()
     {
         var user_select =  $('#select_user_form');
         user_select.empty(); // clear pervious users
-        user_select.append($(`<option selected value="">Select User</option>`)) // default
-        // if(data.length <= 0) $('#data-container .row').append('<h3 class=" text-danger-emphasis">No Flights</h3>'); // If no flights return message
+        user_select.append($(`<option selected value="">Select User</option>`))
         data.forEach(function(user)
         {
             var option = $(`<option value="${user.user_id}">User: ${user.user_id}</option>`);

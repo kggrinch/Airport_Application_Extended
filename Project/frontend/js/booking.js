@@ -49,9 +49,7 @@ $(document).ready(function() {
             url: `http://localhost:3000/customer/${user_id}/bookings`,
             method: "GET",
             dataType: "json",
-            // If it works, show bookings
             success: render,
-            // If it fails, show error
             error: (xhr, status, error) => {
                 console.error("Error fetching bookings:", error, xhr.responseText);
                 $('#bookingTableBody').html(`
