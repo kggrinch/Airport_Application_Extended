@@ -89,10 +89,4 @@ This web service API consists of two main services:
   - View current bookings and reservations
 
 ## Data utilized 
-*The data utilized in this web service API is sourced from the ChatGPT OpenAI, which contains collection of sample flight data modified by contributors.
-
-## AI Usage
-* ChatGPT OpenAI generation tool was used to generate the sample data found within the database script. All sample data was sourced from ChatGPT OpenAI.
-
-
-
+* The data utilized in this web service API is sourced from the ChatGPT OpenAI, which contains collection of sample flight data modified by contributors.
