@@ -9,7 +9,7 @@ This web service API consists of two main services:
 **Installation 
   1. In VS code open project in workspace, and open the terminal.
   2. In the terminal navigate to backend directory located at: Airport_Application/Project/backend
-       * cd backend
+      *) cd backend
   4. Run the following commands to initialize the project and install required dependencies (express, nodemon, mysql2, cors, dotenv):
        * npm install
 
