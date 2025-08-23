@@ -33,7 +33,7 @@ This web service API consists of two main services:
   1. Open the config.js file located at: Airport_Application/Project/backend/config.js
   2. The application uses an .env file to manage multiple connections to sql. To run this on local machine either:
 
-     A) Update the user: and password: lines with your unique user and password within the create mysql connection server (refer to step 2 of "Importing databse")
+     A) Update the user: and password: lines with your unique user and password within the create mysql connection server (refer to step 2 of "Importing database")
      
        OR
      
