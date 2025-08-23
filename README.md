@@ -79,7 +79,7 @@ This web service API consists of two main services:
   7. Open authetication.html file for entry into the application.
 
 ## Features
-*User Authetication
+*User Authentication
   - This service manages the login section of the application
 
 *Customer Flight Management
