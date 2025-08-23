@@ -145,7 +145,6 @@ exports.createBooking = (req, res) =>
 // delete ticket
 exports.deleteTicket = (req, res) =>
 {
-  // This query deletes the ticket given ticket_id. However, it is also possible to delete the ticket given flight number and seat number.
   const ticket = req.body.ticket_id;
   connection.query(`DELETE FROM ticket WHERE ticket_id = ?`,
     [ticket],
