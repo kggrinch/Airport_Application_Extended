@@ -110,7 +110,7 @@ CREATE TABLE IF NOT EXISTS flight
     arrival_time DATETIME NOT NULL,
     gate_number varchar(255),
     PRIMARY KEY(flight_number),
-    UNIQUE (departure_airport_id, gate_number), -- No flights can share the same gate at the same airport. Future work can include propery time management with gate sharing with similar airports
+    UNIQUE (departure_airport_id, gate_number), -- No flights can share the same gate at the same airport. Future work can include proper time management with gate sharing of same airports
     CONSTRAINT fk_flight_departure_airport
 		FOREIGN KEY (departure_airport_id) REFERENCES airport(airport_id)
     	ON DELETE RESTRICT
